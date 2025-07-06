@@ -1,0 +1,11 @@
+{
+    "name": "ComplitionStage",
+    "alias": "complitionstage",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ComplitionStage\\Providers\\ComplitionStageServiceProvider"
+    ],
+    "files": []
+}

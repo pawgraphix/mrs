@@ -1,0 +1,11 @@
+{
+    "name": "OrderMgnt",
+    "alias": "ordermgnt",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\OrderMgnt\\Providers\\OrderMgntServiceProvider"
+    ],
+    "files": []
+}

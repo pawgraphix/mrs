@@ -1,0 +1,8 @@
+{
+    "Auth": true,
+    "Setup": true,
+    "OrderMgnt": true,
+    "TradePoint": true,
+    "Modal": true,
+    "ComplitionStage": true
+}
