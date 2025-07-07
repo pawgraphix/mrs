@@ -16,6 +16,7 @@ class DepartmentController extends Controller
         return view('auth::departments.index', $param);
     }
 
+
     public function store(Request $request)
     {
         try {

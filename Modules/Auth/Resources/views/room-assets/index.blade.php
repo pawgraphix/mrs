@@ -10,7 +10,7 @@
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                    data-target="#create_asset_categories_modal">Add New
+                                    data-target="#create_assets_modal">Add New
                             </button>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
 
         @include('auth::room-assets.create')
         <!-- Edit Modal-->
-        <div id="edit_assets_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="edit_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content modal-edit">
                 </div><!-- /.modal-content -->
@@ -75,8 +75,12 @@
             e.preventDefault();
             const dataURL = $(this).attr('href');
             $('.modal-edit').load(dataURL, function () {
-                $('#edit_assets_modal').modal({show: true});
+                $('#edit_modal').modal({show: true});
             });
+        });
+
+        $('#edit_modal').on('shown.bs.modal',function(){
+            $('.dd_select').select2();
         });
     </script>
 @endsection

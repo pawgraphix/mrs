@@ -3,13 +3,17 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Asset;
 use App\Models\MaintenanceRequest;
+use Exception;
+use Illuminate\Http\Request;
 
 class MaintenanceRequestController extends Controller
 {
     public function index()
     {
         $param['items'] = MaintenanceRequest::all();
+        $param['assets'] = Asset::all();
         return view('auth::maintenance_requests.index', $param);
     }
 
@@ -17,15 +21,10 @@ class MaintenanceRequestController extends Controller
     {
         try {
             $data = $request->all();
-            $isExist = MaintenanceRequest::isExist($data['name']);
-            if (!$isExist) {
-                MaintenanceRequest::create($data);
-                $error_msg = 'Successfully Saved';
-                return redirect()->back()->with('success', $error_msg);
-            } else {
-                $success_msg = 'Maintenance Request Already Exist';
-                return redirect()->back()->with('error', $success_msg);
-            }
+            $data['user_id'] = auth()->id();
+            MaintenanceRequest::create($data);
+            $error_msg = 'Successfully Saved';
+            return redirect()->back()->with('success', $error_msg);
         } catch (Exception $ex) {
             $success_msg = $ex->getMessage();
             return redirect()->back()->with('error', $success_msg);

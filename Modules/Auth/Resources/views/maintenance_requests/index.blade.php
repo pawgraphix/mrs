@@ -22,8 +22,12 @@
                                 <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
+                                    <th>Reporter Name</th>
+                                    <th>Asset Name</th>
+                                    <th>Issue</th>
+                                    <th>Status</th>
+                                    <th>Reported Time</th>
+                                    <th>Resolved Time</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -32,8 +36,12 @@
                                 @foreach($items as $key=>$item)
                                     <tr>
                                         <td style="width: 5%">{{++$key}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{{$item->description}}</td>
+                                        <td>{{$item->user->first_name." " .$item->user->last_name}}</td>
+                                        <td>{{$item->asset->name}}</td>
+                                        <td>{{$item->issue}}</td>
+                                        <td>{{$item->status}}</td>
+                                        <td>{{$item->reported_at}}</td>
+                                        <td>{{$item->resolved_at}}</td>
                                         <td style="width: 12%;text-align: center">
                                             <a class="edit-link" href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
                                             | <a class="delete-link" href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>

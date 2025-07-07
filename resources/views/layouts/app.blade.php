@@ -12,8 +12,8 @@
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/>
 
     <!-- Font Icons -->
-    <link href="{{asset('room-assets/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
-    <link href="{{asset('room-assets/ionicon/css/ionicons.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('assets/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('assets/ionicon/css/ionicons.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/material-design-iconic-font.min.css')}}" rel="stylesheet">
 
     <!-- animate css -->
@@ -23,12 +23,12 @@
     <link href="{{asset('css/waves-effect.css')}}" rel="stylesheet">
 
     <!-- sweet alerts -->
-    <link href="{{asset('room-assets/sweet-alert/sweet-alert.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/sweet-alert/sweet-alert.min.css')}}" rel="stylesheet">
 
-    <link href="{{asset('room-assets/select2/select2.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/select2/select2.css')}}" rel="stylesheet" type="text/css" />
 
     <!-- Plugins css -->
-    <link href="{{asset('room-assets/notifications/notification.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/notifications/notification.css')}}" rel="stylesheet" />
 
     <!-- Custom Files -->
     <link href="{{asset('css/helper.css')}}" rel="stylesheet" type="text/css"/>

@@ -3,16 +3,20 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Asset;
+use App\Models\AssetCategory;
+use App\Models\Department;
 
 class AssetController extends Controller
 {
     public function index()
     {
         $param['items'] = Asset::all();
+        $param['departments'] = Department::all();
+        $param['asset_categories'] = AssetCategory::all();
         return view('auth::room-assets.index', $param);
     }
-
     public function store(Request $request)
     {
         try {
@@ -35,7 +39,9 @@ class AssetController extends Controller
     public function edit($id)
     {
         $params['item'] = Asset::find($id);
-        return view('auth::assets.edit', $params);
+        $params['departments'] = Department::orderBy('name')->get();
+        $params['asset_categories'] = AssetCategory::orderBy('name')->get();
+        return view('auth::room-assets.edit', $params);
     }
 
     public function update(Request $request, $id)
