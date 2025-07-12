@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2025 at 05:43 PM
+-- Generation Time: Jul 12, 2025 at 02:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `assets` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `registration_number` varchar(100) DEFAULT NULL,
-  `year_of_purchase` year(4) DEFAULT NULL,
+  `location_id` int(11) NOT NULL,
+  `registration_number` varchar(100) NOT NULL,
+  `year_of_purchase` year(4) NOT NULL,
   `department_id` int(10) UNSIGNED NOT NULL,
   `asset_category_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -44,17 +44,17 @@ CREATE TABLE `assets` (
 -- Dumping data for table `assets`
 --
 
-INSERT INTO `assets` (`id`, `name`, `location`, `registration_number`, `year_of_purchase`, `department_id`, `asset_category_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'HP ProBook 450', 'Lab A - Room 5', 'CBE-ICT-001', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(2, 'Epson Printer', 'Accounts Office', 'CBE-ACT-004', '2021', 2, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(3, 'Wooden Desk', 'Office 202', 'CBE-FUR-027', '2020', 1, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(4, 'Library Bookshelf', 'Library Block B', 'CBE-LIB-009', '2019', 6, 6, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(5, 'LED Projector', 'Lecture Hall 1', 'CBE-MKT-015', '2023', 4, 2, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(6, 'Dell Desktop', 'Admin Block', 'CBE-ICT-022', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(7, 'Office Chair', 'Procurement Room', 'CBE-PS-033', '2020', 3, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(8, 'Photocopier', 'Registry Office', 'CBE-GEN-050', '2021', 7, 7, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(9, 'Hp Monitor', 'Lab A - Room 5', 'Lab A - Room 5', '2010', 5, 3, '2025-07-07 11:56:14', '2025-07-07 12:15:08', NULL),
-(10, 'Wardrobe', 'Library Block B', 'CBE-LIB-011', '2018', 9, 6, '2025-07-07 12:42:31', '2025-07-07 12:42:34', '2025-07-07 12:42:34');
+INSERT INTO `assets` (`id`, `name`, `location_id`, `registration_number`, `year_of_purchase`, `department_id`, `asset_category_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'HP ProBook 450', 1, 'CBE-ICT-001', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(2, 'Epson Printer', 2, 'CBE-ACT-004', '2021', 2, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(3, 'Wooden Desk', 5, 'CBE-FUR-027', '2020', 1, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(4, 'Library Bookshelf', 6, 'CBE-LIB-009', '2019', 6, 6, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(5, 'LED Projector', 3, 'CBE-MKT-015', '2023', 4, 2, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(6, 'Dell Desktop', 4, 'CBE-ICT-022', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(7, 'Office Chair', 1, 'CBE-PS-033', '2020', 3, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(8, 'Photocopier', 5, 'CBE-GEN-050', '2021', 7, 7, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(9, 'Hp Monitor', 2, 'Lab A - Room 5', '2010', 5, 3, '2025-07-07 11:56:14', '2025-07-07 12:15:08', NULL),
+(10, 'Wardrobe', 6, 'CBE-LIB-011', '2018', 9, 6, '2025-07-07 12:42:31', '2025-07-07 12:42:34', '2025-07-07 12:42:34');
 
 -- --------------------------------------------------------
 
@@ -65,7 +65,7 @@ INSERT INTO `assets` (`id`, `name`, `location`, `registration_number`, `year_of_
 CREATE TABLE `asset_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -116,7 +116,47 @@ INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`, `deleted_at
 (7, 'General Studies', '2025-07-05 16:13:45', '2025-07-05 16:13:45', NULL),
 (8, 'Research and Publications', '2025-07-05 16:13:45', '2025-07-05 16:13:45', NULL),
 (9, 'Library and Information Management', '2025-07-05 16:13:45', '2025-07-05 14:50:15', NULL),
-(10, 'Schoo', '2025-07-05 14:09:29', '2025-07-05 14:12:39', '2025-07-05 14:12:39');
+(10, 'Schoo', '2025-07-05 14:09:29', '2025-07-05 14:12:39', '2025-07-05 14:12:39'),
+(11, 'Sayansi na Teknolojia', '2025-07-08 07:59:42', '2025-07-08 08:02:21', '2025-07-08 08:02:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Lab A - Room 1', '2025-07-11 10:35:39', '2025-07-12 06:20:12', NULL),
+(2, 'Lab A - Room 2', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(3, 'Lab A - Room 3', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(4, 'Lab B - Room 1', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(5, 'Lab B - Room 2', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(6, 'Lecture Hall A', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(7, 'Lecture Hall B', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(8, 'Lecture Hall C', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(9, 'Library Main Hall', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(10, 'Library Reading Room', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(11, 'Administration Office 1', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(12, 'Administration Office 2', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(13, 'Dean\'s Office', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(14, 'Store Room 1', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(15, 'Store Room 2', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(16, 'Accounts Office', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(17, 'Staff Office 1', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(18, 'Staff Office 2', '2025-07-11 10:35:39', '2025-07-11 10:35:39', NULL),
+(19, 'Admission Office', '2025-07-11 09:05:04', '2025-07-11 09:05:49', '2025-07-11 09:05:49');
 
 -- --------------------------------------------------------
 
@@ -129,7 +169,8 @@ CREATE TABLE `maintenance_requests` (
   `user_id` int(11) NOT NULL,
   `asset_id` int(11) UNSIGNED NOT NULL,
   `issue` text NOT NULL,
-  `status` varchar(50) DEFAULT 'pending',
+  `status` varchar(50) NOT NULL DEFAULT 'pending',
+  `location_id` int(11) NOT NULL,
   `reported_at` timestamp NULL DEFAULT current_timestamp(),
   `resolved_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -141,20 +182,10 @@ CREATE TABLE `maintenance_requests` (
 -- Dumping data for table `maintenance_requests`
 --
 
-INSERT INTO `maintenance_requests` (`id`, `user_id`, `asset_id`, `issue`, `status`, `reported_at`, `resolved_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 16, 6, 'screen inaonyesha giza', 'pending', '2025-07-07 15:24:33', NULL, '2025-07-07 15:24:33', '2025-07-07 15:33:19', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `maintenance_requests` (`id`, `user_id`, `asset_id`, `issue`, `status`, `location_id`, `reported_at`, `resolved_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 16, 6, 'screen inaonyesha giza', 'pending', 2, '2025-07-07 15:24:33', NULL, '2025-07-07 15:24:33', '2025-07-11 12:10:17', NULL),
+(3, 30, 3, 'Sunt et labore quia', 'pending', 5, '2025-07-07 19:14:56', NULL, '2025-07-07 16:14:56', '2025-07-11 12:10:24', NULL),
+(4, 30, 3, 'Mguu mmoja mbovu', 'pending', 7, '2025-07-07 20:25:13', NULL, '2025-07-07 17:25:13', '2025-07-11 12:10:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -254,7 +285,13 @@ INSERT INTO `users` (`id`, `role_id`, `first_name`, `last_name`, `phone_number`,
 (28, 3, 'Whitney', 'Leblanc', '+1 (317) 208-8218', 'xegyku@mailinator.com', 'female', '$2y$10$1H.VpB/vuFc1JzV0dAUxyegd72NEx4iShV9XpywZQzlTn2YeFnRqG', '2025-07-05 08:17:43', '2025-07-05 08:17:43', NULL),
 (29, 3, 'Maria', 'Abunuasi', '0763976000', 'abunuasimaria8@gmail.com', 'male', '$2y$10$5U9RevxlKNErIpSMyb9ceu8VxRQCFBb2IMyqUA0EFs0jnlRW/GJsC', '2025-07-05 09:35:32', '2025-07-05 09:35:32', NULL),
 (30, 3, 'James', 'Rodriquez', '+1 (941) 295-9381', 'james@gmail.com', 'male', '$2y$10$Mf6vTDpYW.py//q/ji.YBusfr5taBYlYD8fLXoBGP3mVCCKVVLhoi', '2025-07-05 12:35:43', '2025-07-05 12:35:43', NULL),
-(31, 3, 'Alexa', 'Harrington', '+1 (478) 507-8117', 'remyvy@mailinator.com', 'female', '$2y$10$9zOQHD7Scfys1RfwClp78ePxvCP//HnHzuxd9zUgauzRAGsi46ufO', '2025-07-06 13:57:09', '2025-07-06 13:57:09', NULL);
+(31, 3, 'Alexa', 'Harrington', '+1 (478) 507-8117', 'remyvy@mailinator.com', 'female', '$2y$10$9zOQHD7Scfys1RfwClp78ePxvCP//HnHzuxd9zUgauzRAGsi46ufO', '2025-07-06 13:57:09', '2025-07-06 13:57:09', NULL),
+(32, 3, 'Donna', 'York', '+1 (691) 452-2642', 'zomyhic@mailinator.com', 'female', '$2y$10$XujX.yX31ip7Q1yBlaZxFO9yW9WCLV7FJWwenyLmB/bsTsSgx7KNi', '2025-07-07 16:31:40', '2025-07-07 16:31:40', NULL),
+(33, 3, 'Zachary', 'Navarro', '+1 (491) 509-4661', 'hopinaw@mailinator.com', 'female', '$2y$10$nuX8co0npZCDPS2VkTCs0.YQ3WcyOeABEPLcpu0OJxoOga.NHrc4K', '2025-07-07 16:34:44', '2025-07-07 16:34:44', NULL),
+(34, 3, 'Kai', 'Carpenter', '+1 (528) 583-2785', 'talapyru@mailinator.com', 'male', '$2y$10$A0V.lyk8DUm8vbqpXwowmOzRR1Iqx4etZ1Bbm9qzbBX2NdAhExfJC', '2025-07-07 16:43:48', '2025-07-07 16:43:48', NULL),
+(35, 3, 'Halima', 'Ramadhani', '0765566786', 'halima@gmail.com', 'female', '$2y$10$VadeujEw7/4Vs49mFF.X2.T/e8zTCAd.yLYmh/vh8DC69j16XBQx2', '2025-07-08 03:12:18', '2025-07-08 03:12:18', NULL),
+(36, 3, 'Macaulay', 'Oliver', '+1 (949) 574-1156', 'kupa@mailinator.com', 'female', '$2y$10$QbeG0CHidQnPpwklaF6nHe/JjFdGS1AVvWDkLmSmoadW3xzp2AZ3q', '2025-07-08 07:53:28', '2025-07-08 07:53:28', NULL),
+(37, 3, 'Grady', 'Welch', '+1 (142) 428-1735', 'grady@gmail.com', 'male', '$2y$10$MUPitgOACP830LvJwdvs..BWHNHo5RilQeYnvL1ZW8AOcQkzwFW62', '2025-07-08 07:53:59', '2025-07-08 07:53:59', NULL);
 
 --
 -- Indexes for dumped tables
@@ -265,23 +302,27 @@ INSERT INTO `users` (`id`, `role_id`, `first_name`, `last_name`, `phone_number`,
 --
 ALTER TABLE `assets`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `registration_number` (`registration_number`),
   ADD KEY `department_id` (`department_id`),
-  ADD KEY `asset_category_id` (`asset_category_id`);
+  ADD KEY `asset_category_id` (`asset_category_id`),
+  ADD KEY `assets_ibfk_3` (`location_id`);
 
 --
 -- Indexes for table `asset_categories`
 --
 ALTER TABLE `asset_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `departments`
 --
 ALTER TABLE `departments`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `maintenance_requests`
@@ -289,13 +330,8 @@ ALTER TABLE `departments`
 ALTER TABLE `maintenance_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_asset` (`asset_id`),
-  ADD KEY `fk_user` (`user_id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
+  ADD KEY `fk_user` (`user_id`),
+  ADD KEY `fk_location` (`location_id`);
 
 --
 -- Indexes for table `roles`
@@ -338,13 +374,19 @@ ALTER TABLE `asset_categories`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -362,7 +404,7 @@ ALTER TABLE `role_user`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables
@@ -373,13 +415,15 @@ ALTER TABLE `users`
 --
 ALTER TABLE `assets`
   ADD CONSTRAINT `assets_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
-  ADD CONSTRAINT `assets_ibfk_2` FOREIGN KEY (`asset_category_id`) REFERENCES `asset_categories` (`id`);
+  ADD CONSTRAINT `assets_ibfk_2` FOREIGN KEY (`asset_category_id`) REFERENCES `asset_categories` (`id`),
+  ADD CONSTRAINT `assets_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
 
 --
 -- Constraints for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
   ADD CONSTRAINT `fk_asset` FOREIGN KEY (`asset_id`) REFERENCES `assets` (`id`),
+  ADD CONSTRAINT `fk_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`),
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --

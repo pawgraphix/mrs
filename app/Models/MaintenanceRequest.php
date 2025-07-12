@@ -26,14 +26,18 @@ class MaintenanceRequest extends Model
     {
         return $this->belongsTo(Asset::class);
     }
-    public static function isExist($name): Department|null
+    public function location()
     {
-        return Department::where('name', $name)->first();
+        return $this->belongsTo(Location::class);
+    }
+    public static function isExist($name): MaintenanceRequest|null
+    {
+        return MaintenanceRequest::where('name', $name)->first();
     }
 
-    public static function isExistOnEdit($name, $id): Department|null
+    public static function isExistOnEdit($name, $id): MaintenanceRequest|null
     {
-        return Department::where([['name', $name], ['id', '!=', $id]])->first();
+        return MaintenanceRequest::where([['name', $name], ['id', '!=', $id]])->first();
     }
 
 }

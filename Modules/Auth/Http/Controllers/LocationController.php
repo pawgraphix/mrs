@@ -3,30 +3,30 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
 use App\Models\Location;
-use App\Models\MaintenanceRequest;
 use Exception;
 use Illuminate\Http\Request;
 
-class MaintenanceRequestController extends Controller
+class LocationController extends Controller
 {
     public function index()
     {
-        $param['items'] = MaintenanceRequest::all();
-        $param['assets'] = Asset::all();
-        $param['locations'] = Location::all();
-        return view('auth::maintenance_requests.index', $param);
+        $param['items'] = Location::all();
+        return view('auth::locations.index', $param);
     }
-
     public function store(Request $request)
     {
         try {
             $data = $request->all();
-            $data['user_id'] = auth()->id();
-            MaintenanceRequest::create($data);
-            $error_msg = 'Successfully Saved';
-            return redirect()->back()->with('success', $error_msg);
+            $isExist = Location::isExist($data['name']);
+            if (!$isExist) {
+                Location::create($data);
+                $error_msg = 'Successfully Saved';
+                return redirect()->back()->with('success', $error_msg);
+            } else {
+                $success_msg = 'Location Name Already Exist';
+                return redirect()->back()->with('error', $success_msg);
+            }
         } catch (Exception $ex) {
             $success_msg = $ex->getMessage();
             return redirect()->back()->with('error', $success_msg);
@@ -35,23 +35,22 @@ class MaintenanceRequestController extends Controller
 
     public function edit($id)
     {
-        $params['item'] = MaintenanceRequest::find($id);
-        $params['locations'] = Location::orderBy('name')->get();
-        return view('auth::maintenance_requests.edit', $params);
+        $params['item'] = Location::find($id);
+        return view('auth::locations.edit', $params);
     }
 
     public function update(Request $request, $id)
     {
         try {
             $data = $request->all();
-            $trade_point = MaintenanceRequest::find($id);
-            $isExist = MaintenanceRequest::isExistOnEdit($data['name'], $id);
+            $location = Location::find($id);
+            $isExist = Location::isExistOnEdit($data['name'], $id);
             if (!$isExist) {
-                $trade_point->update($data);
+                $location->update($data);
                 $success_msg = 'Successfully Updated';
                 return redirect()->back()->with('success', $success_msg);
             } else {
-                $error_msg = 'Maintenance Request Already Exist';
+                $error_msg = 'Location Name Already Exist';
                 return redirect()->back()->with('error', $error_msg);
             }
         } catch (Exception $ex) {
@@ -63,13 +62,13 @@ class MaintenanceRequestController extends Controller
     public function destroy($id)
     {
         try {
-            $item = MaintenanceRequest::find($id);
+            $item = Location::find($id);
             if ($item) {
                 $item->delete();
                 $success_msg = 'Successfully Deleted';
                 return redirect()->back()->with('success', $success_msg);
             } else {
-                $error_msg = 'Maintenance Request Does not Exist';
+                $error_msg = 'Location Name Does not Exist';
                 return redirect()->back()->with('error', $error_msg);
             }
         } catch (Exception $ex) {

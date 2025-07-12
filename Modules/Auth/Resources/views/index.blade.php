@@ -7,7 +7,7 @@
     <meta name="author" content="YourTeamName">
 
     <link rel="shortcut icon" href="images/favicon_1.ico">
-    <title>Maintenance System - Login</title>
+    <title>Maintenance Reporting System</title>
 
     <!-- Base Css Files -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -32,32 +32,41 @@
         <div class="panel-body">
             <div class="text-center">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default active" data-toggle="tab" data-target="#login-tab" id="btn-login">Login</button>
+                    <button type="button" class="btn btn-default" data-toggle="tab" data-target="#login-tab" id="btn-login">Login</button>
                     <button type="button" class="btn btn-default" data-toggle="tab" data-target="#register-tab" id="btn-register">Register</button>
                 </div>
             </div>
 
             <div class="tab-content m-t-20">
                 <!-- Login Tab -->
-                <div id="login-tab" class="tab-pane fade in active">
+                <div id="login-tab" class="tab-pane fade">
                     <form class="form-horizontal m-t-20" method="POST" action="{{ route('login') }}">
                         @csrf
+
                         @if(session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
+                            <div class="alert alert-danger auto-dismiss">{{ session('error') }}</div>
                         @endif
+
                         @if(session('success'))
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    document.getElementById('btn-login').click();
-                                    document.getElementById('form-title').innerHTML = 'Login to <strong>MRS</strong>';
-                                });
-                            </script>
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                            <div class="alert alert-success auto-dismiss">{{ session('success') }}</div>
+                        @endif
+
+                        @if ($errors->has('email') || $errors->has('password'))
+                            <div class="alert alert-danger auto-dismiss">
+                                <ul class="m-0">
+                                    @foreach ($errors->get('email') as $msg)
+                                        <li>{{ $msg }}</li>
+                                    @endforeach
+                                    @foreach ($errors->get('password') as $msg)
+                                        <li>{{ $msg }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="email" type="email" required placeholder="Email">
+                                <input class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
 
@@ -77,39 +86,34 @@
 
                 <!-- Register Tab -->
                 <div id="register-tab" class="tab-pane fade">
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            document.getElementById('btn-register').addEventListener('click', function () {
-                                document.getElementById('form-title').innerHTML = 'Register to <strong>MRS</strong>';
-                                this.classList.add('active');
-                                document.getElementById('btn-login').classList.remove('active');
-                            });
-
-                            document.getElementById('btn-login').addEventListener('click', function () {
-                                document.getElementById('form-title').innerHTML = 'Login to <strong>MRS</strong>';
-                                this.classList.add('active');
-                                document.getElementById('btn-register').classList.remove('active');
-                            });
-                        });
-                    </script>
-
                     <form class="form-horizontal m-t-20" method="POST" action="{{ route('register') }}">
                         @csrf
+
+                        @if ($errors->any() && old('first_name'))
+                            <div class="alert alert-danger auto-dismiss">
+                                <ul class="m-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="first_name" type="text" required placeholder="First Name">
+                                <input class="form-control input-lg" name="first_name" type="text" required placeholder="First Name" value="{{ old('first_name') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="last_name" type="text" required placeholder="Last Name">
+                                <input class="form-control input-lg" name="last_name" type="text" required placeholder="Last Name" value="{{ old('last_name') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="phone_number" type="text" required placeholder="Phone Number">
+                                <input class="form-control input-lg" name="phone_number" type="text" required placeholder="Phone Number" value="{{ old('phone_number') }}">
                             </div>
                         </div>
 
@@ -117,15 +121,15 @@
                             <div class="col-xs-12">
                                 <select name="gender" class="form-control input-lg" required>
                                     <option value="">Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="email" type="email" required placeholder="Email">
+                                <input class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
 
@@ -154,16 +158,65 @@
     </div>
 </div>
 
+<!-- Scripts -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/waves.js') }}"></script>
 <script src="{{ asset('js/wow.min.js') }}"></script>
-<script src="{{ asset('js/jquery.nicescroll.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('js/jquery.scrollTo.min.js') }}"></script>
-<script src="{{ asset('room-assets/jquery-detectmobile/detect.js') }}"></script>
-<script src="{{ asset('room-assets/fastclick/fastclick.js') }}"></script>
-<script src="{{ asset('room-assets/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
-<script src="{{ asset('room-assets/jquery-blockui/jquery.blockUI.js') }}"></script>
+<script src="{{ asset('assets/jquery-detectmobile/detect.js') }}"></script>
+<script src="{{ asset('assets/fastclick/fastclick.js') }}"></script>
+<script src="{{ asset('assets/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
+<script src="{{ asset('assets/jquery-blockui/jquery.blockUI.js') }}"></script>
 <script src="{{ asset('js/jquery.app.js') }}"></script>
+
+<!-- Auto dismiss alerts -->
+<script>
+    setTimeout(function () {
+        document.querySelectorAll('.auto-dismiss').forEach(function (el) {
+            el.style.transition = 'opacity 0.5s';
+            el.style.opacity = 0;
+            setTimeout(() => el.remove(), 500);
+        });
+    }, 5000);
+</script>
+
+<!-- Dynamic tab control -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginBtn = document.getElementById('btn-login');
+        const registerBtn = document.getElementById('btn-register');
+        const formTitle = document.getElementById('form-title');
+
+        function switchToLogin() {
+            loginBtn.classList.add('active');
+            registerBtn.classList.remove('active');
+            loginTab.classList.add('in', 'active');
+            registerTab.classList.remove('in', 'active');
+            formTitle.innerHTML = 'Login to <strong>MRS</strong>';
+        }
+
+        function switchToRegister() {
+            registerBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+            registerTab.classList.add('in', 'active');
+            loginTab.classList.remove('in', 'active');
+            formTitle.innerHTML = 'Register to <strong>MRS</strong>';
+        }
+
+        loginBtn.addEventListener('click', switchToLogin);
+        registerBtn.addEventListener('click', switchToRegister);
+
+        // Activate correct tab on page load
+        @if ($errors->any() && old('first_name'))
+        switchToRegister();
+        @else
+        switchToLogin();
+        @endif
+    });
+</script>
 </body>
 </html>

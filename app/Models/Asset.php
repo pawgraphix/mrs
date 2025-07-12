@@ -24,14 +24,17 @@ class Asset extends Model
     {
         return $this->hasMany(MaintenanceRequest::class);
     }
-
-    public static function isExist($name): Department|null
+    public function location()
     {
-        return Department::where('name', $name)->first();
+        return $this->belongsTo(Location::class);
+    }
+    public static function isExist($name): Asset|null
+    {
+        return Asset::where('name', $name)->first();
     }
 
-    public static function isExistOnEdit($name, $id): Department|null
+    public static function isExistOnEdit($name, $id): Asset|null
     {
-        return Department::where([['name', $name], ['id', '!=', $id]])->first();
+        return Asset::where([['name', $name], ['id', '!=', $id]])->first();
     }
 }

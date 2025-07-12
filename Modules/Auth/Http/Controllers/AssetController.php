@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\Asset;
 use App\Models\AssetCategory;
@@ -15,6 +16,7 @@ class AssetController extends Controller
         $param['items'] = Asset::all();
         $param['departments'] = Department::all();
         $param['asset_categories'] = AssetCategory::all();
+        $param['locations'] = Location::all();
         return view('auth::room-assets.index', $param);
     }
     public function store(Request $request)
@@ -41,6 +43,7 @@ class AssetController extends Controller
         $params['item'] = Asset::find($id);
         $params['departments'] = Department::orderBy('name')->get();
         $params['asset_categories'] = AssetCategory::orderBy('name')->get();
+        $params['locations'] = Location::orderBy('name')->get();
         return view('auth::room-assets.edit', $params);
     }
 
@@ -48,10 +51,10 @@ class AssetController extends Controller
     {
         try {
             $data = $request->all();
-            $trade_point = Asset::find($id);
+            $asset = Asset::find($id);
             $isExist = Asset::isExistOnEdit($data['name'], $id);
             if (!$isExist) {
-                $trade_point->update($data);
+                $asset->update($data);
                 $success_msg = 'Successfully Updated';
                 return redirect()->back()->with('success', $success_msg);
             } else {

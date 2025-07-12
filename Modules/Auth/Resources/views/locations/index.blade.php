@@ -6,11 +6,11 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-10">
-                            <h3 class="panel-title">Manage Assets </h3>
+                            <h3 class="panel-title">Manage Locations </h3>
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                    data-target="#create_assets_modal">Add New
+                                    data-target="#create_location_modal">Add New
                             </button>
                         </div>
                     </div>
@@ -23,11 +23,6 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>Name</th>
-                                    <th>Location</th>
-                                    <th>Registration No.</th>
-                                    <th>Purchased Year</th>
-                                    <th>Department</th>
-                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -37,14 +32,9 @@
                                     <tr>
                                         <td style="width: 5%">{{++$key}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td>{{$item->location->name}}</td>
-                                        <td>{{$item->registration_number}}</td>
-                                        <td>{{$item->year_of_purchase}}</td>
-                                        <td>{{$item->department->name}}</td>
-                                        <td>{{$item->assetCategory->name}}</td>
                                         <td style="width: 12%;text-align: center">
-                                            <a class="edit-link" href="{{route('room-assets.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link" href="{{route('room-assets.destroy',$item->id)}}">Delete</a>
+                                            <a class="edit-link" href="{{route('locations.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link" href="{{route('locations.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -57,9 +47,9 @@
             </div>
         </div>
 
-        @include('auth::room-assets.create')
+        @include('auth::locations.create')
         <!-- Edit Modal-->
-        <div id="edit_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="edit_location_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content modal-edit">
                 </div><!-- /.modal-content -->
@@ -75,12 +65,8 @@
             e.preventDefault();
             const dataURL = $(this).attr('href');
             $('.modal-edit').load(dataURL, function () {
-                $('#edit_modal').modal({show: true});
+                $('#edit_location_modal').modal({show: true});
             });
-        });
-
-        $('#edit_modal').on('shown.bs.modal',function(){
-            $('.dd_select').select2();
         });
     </script>
 @endsection

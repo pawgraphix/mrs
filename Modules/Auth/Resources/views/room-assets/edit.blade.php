@@ -13,16 +13,21 @@
                        value="{{$item->name}}">
             </div>
             <div class="form-group col-md-6">
-                <label for="name">Location</label>
-                <input type="text" class="form-control" id="location" name="location"
-                       value="{{$item->location}}">
+                <label for="location_id">Location</label>
+                <select class="form-group" id="location_id" name="location_id" required style="width: 100%">
+                    <option>---Select---</option>
+                    @foreach($locations as $location)
+                        <option
+                            value="{{$location->id}}" {{$location->id ==$item->location_id ? 'selected':'' }}>{{$location->name}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="name">Registration Number</label>
                 <input type="text" class="form-control" id="registration_number" name="registration_number"
-                       value="{{$item->location}}">
+                       value="{{$item->registration_number}}">
             </div>
             <div class="form-group col-md-6">
                 <label for="name">Year Of Purchase</label>

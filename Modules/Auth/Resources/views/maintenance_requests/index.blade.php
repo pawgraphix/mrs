@@ -25,6 +25,7 @@
                                     <th>Reporter Name</th>
                                     <th>Asset Name</th>
                                     <th>Issue</th>
+                                    <th>Location</th>
                                     <th>Status</th>
                                     <th>Reported Time</th>
                                     <th>Resolved Time</th>
@@ -39,6 +40,7 @@
                                         <td>{{$item->user->first_name." " .$item->user->last_name}}</td>
                                         <td>{{$item->asset->name}}</td>
                                         <td>{{$item->issue}}</td>
+                                        <td>{{$item->location->name}}</td>
                                         <td>{{$item->status}}</td>
                                         <td>{{$item->reported_at}}</td>
                                         <td>{{$item->resolved_at}}</td>

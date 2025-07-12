@@ -46,10 +46,10 @@ class DepartmentController extends Controller
     {
         try {
             $data = $request->all();
-            $trade_point = Department::find($id);
+            $department = Department::find($id);
             $isExist = Department::isExistOnEdit($data['name'], $id);
             if (!$isExist) {
-                $trade_point->update($data);
+                $department->update($data);
                 $success_msg = 'Successfully Updated';
                 return redirect()->back()->with('success', $success_msg);
             } else {

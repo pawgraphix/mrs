@@ -52,4 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('maintenance_requests', 'MaintenanceRequestController')->except(['create', 'show', 'destroy']);
     Route::get('maintenance_requests/destroy/{id}', 'MaintenanceRequestController@destroy')->name('maintenance_requests.destroy');
 
+    //Locations
+    Route::resource('locations', 'LocationController')->except(['create', 'show', 'destroy']);
+    Route::get('locations/destroy/{id}', 'LocationController@destroy')->name('locations.destroy');
+
 });
