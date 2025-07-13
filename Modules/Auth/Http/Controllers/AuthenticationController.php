@@ -2,6 +2,7 @@
 
 namespace Modules\Auth\Http\Controllers;
 
+use App\Models\MaintenanceRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,6 +15,7 @@ class AuthenticationController extends Controller
     {
         $params['errorMsg'] = "";
         return view('auth::index', $params);
+
     }
 
     public function login(Request $request)
@@ -72,6 +74,22 @@ class AuthenticationController extends Controller
 
     public function dashboard()
     {
-        return view('auth::dashboard');
+        $totalIssues = MaintenanceRequest::count();
+        $pendingIssues = MaintenanceRequest::where('status', 'pending')->count();
+        $inProgressIssues = MaintenanceRequest::where('status', 'in_progress')->count();
+        $resolvedIssues = MaintenanceRequest::where('status', 'resolved')->count();
+
+        // Notifications kwa mtumiaji aliye-login (kama unatumia user_id kwenye notifications)
+        //$notifications = Notification::where('user_id', auth()->id())->latest()->take(5)->get();
+        $recentActivities = MaintenanceRequest::latest()->take(5)->get();
+
+        return view('auth::dashboard', compact(
+            'totalIssues',
+            'pendingIssues',
+            'inProgressIssues',
+            'resolvedIssues',
+            //'notifications',
+            'recentActivities'
+        ));
     }
 }

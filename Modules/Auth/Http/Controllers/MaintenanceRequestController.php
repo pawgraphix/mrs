@@ -44,10 +44,10 @@ class MaintenanceRequestController extends Controller
     {
         try {
             $data = $request->all();
-            $trade_point = MaintenanceRequest::find($id);
+            $maintenance_request = MaintenanceRequest::find($id);
             $isExist = MaintenanceRequest::isExistOnEdit($data['name'], $id);
             if (!$isExist) {
-                $trade_point->update($data);
+                $maintenance_request->update($data);
                 $success_msg = 'Successfully Updated';
                 return redirect()->back()->with('success', $success_msg);
             } else {

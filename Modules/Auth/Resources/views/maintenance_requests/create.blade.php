@@ -20,6 +20,16 @@
                                 </select>
                             </div>
                         <div class="form-group">
+                            <label for="location_id">Location</label>
+                            <select class="form-group" id="location_id" name="location_id" required
+                                    style="width: 100%">
+                                <option>---Select---</option>
+                                @foreach($locations as $location)
+                                    <option value="{{$location->id}}">{{$location->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="issue">Issue</label>
                             <textarea class="form-control" id="issue" name="issue"
                                       placeholder="Enter Maintenance Request" rows="6" required></textarea>
