@@ -30,6 +30,9 @@
     <!-- Plugins css -->
     <link href="{{asset('assets/notifications/notification.css')}}" rel="stylesheet" />
 
+    <!-- DataTables -->
+    <link href="{{asset('assets/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
+
     <!-- Custom Files -->
     <link href="{{asset('css/helper.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css"/>
@@ -114,7 +117,7 @@
                 </div>
                 <div class="user-info">
                     <div class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">User <span
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->full_name}} <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <!--- <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile
@@ -126,7 +129,7 @@
                         </ul>
                     </div>
 
-                    <p class="text-muted m-0">Administrator</p>
+                    <p class="text-muted m-0">{{auth()->user()->role->name}}</p>
                 </div>
             </div>
             <!--- Divider -->
@@ -136,26 +139,41 @@
                         <a href="{{route('dashboard')}}" class="waves-effect active"><i
                                 class="md md-home"></i><span> Dashboard </span></a>
                     </li>
-                    <li>
-                        <a href="{{route('departments.index')}}" class="waves-effect active"><i
-                                class="md md-home"></i><span> Departments </span></a>
-                    </li>
-                    <li>
-                        <a href="{{route('room-assets.index')}}" class="waves-effect active"><i
-                                class="md md-home"></i><span> Assets</span></a>
-                    </li>
-                    <li>
-                        <a href="{{route('asset_categories.index')}}" class="waves-effect active"><i
-                                class="md md-home"></i><span> Asset Categories </span></a>
-                    </li>
-                    <li>
-                        <a href="{{route('maintenance_requests.index')}}" class="waves-effect active"><i
-                                class="md md-home"></i><span> Maintenance Requests </span></a>
-                    </li>
-                    <li>
-                        <a href="{{route('locations.index')}}" class="waves-effect active"><i
-                                class="md md-room"></i><span> Locations</span></a>
-                    </li>
+                    @can('Admin')
+                        <li>
+                            <a href="{{route('departments.index')}}" class="waves-effect active"><i
+                                        class="md md-home"></i><span> Departments </span></a>
+                        </li>
+                        <li>
+                            <a href="{{route('room-assets.index')}}" class="waves-effect active"><i
+                                        class="md md-home"></i><span> Assets</span></a>
+                        </li>
+                        <li>
+                            <a href="{{route('asset_categories.index')}}" class="waves-effect active"><i
+                                        class="md md-home"></i><span> Asset Categories </span></a>
+                        </li>
+                        <li>
+                            <a href="{{route('locations.index')}}" class="waves-effect active"><i
+                                        class="md md-room"></i><span> Locations</span></a>
+                        </li>
+                    @endcan
+                   @can('Student')
+                        <li>
+                            <a href="{{route('maintenance_requests.index')}}" class="waves-effect active"><i
+                                        class="md md-home"></i><span> Maintenance Requests </span></a>
+                        </li>
+                   @endcan
+
+                    @can('Hod')
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Maintenance Req </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('maintenance_requests.hod')}}">Incoming</a></li>
+                                <li><a href="{{route('maintenance_requests.approved')}}">Approved</a></li>
+{{--                                <li><a href="email-read.html">Rejected</a></li>--}}
+                            </ul>
+                        </li>
+                    @endcan
 
                    <!-- <li class="has_sub">
                         <a href="#" class="waves-effect"><i class="md md-mail"></i><span> User Management </span><span

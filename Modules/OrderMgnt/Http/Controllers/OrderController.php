@@ -2,7 +2,7 @@
 
 namespace Modules\OrderMgnt\Http\Controllers;
 
-use App\Mail\TaskCompleteNotificationMail;
+use App\Mail\RequestNotificationMail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -110,7 +110,7 @@ class OrderController extends Controller
             $order->update();
 
             $customer = Customer::find($order->customer_id);
-            Mail::to($customer->email)->send(new TaskCompleteNotificationMail($customer));
+            Mail::to($customer->email)->send(new RequestNotificationMail($customer));
 
             $success_msg = 'Successfully Approved';
             return redirect()->back()->with('success', $success_msg);

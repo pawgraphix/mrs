@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\Setup\Entities\TradePoint;
 
 class User extends Authenticatable
 {
@@ -32,7 +30,7 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function hasRole($roleName)
+    public function hasRole($roleName): bool
     {
         return $this->role && $this->role->name === $roleName;
     }

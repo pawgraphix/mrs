@@ -6,19 +6,17 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-10">
-                            <h3 class="panel-title">Manage Maintenance Requests </h3>
+                            <h3 class="panel-title">Approved Maintenance Requests </h3>
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                    data-target="#create_maintenance_requests_modal">Add New
-                            </button>
+                            <!-- Buttons Goes Here-->
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <table id="datatable" class="table table-striped table-condensed table-bordered">
+                            <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>S/N</th>
@@ -26,9 +24,7 @@
                                     <th>Asset Name</th>
                                     <th>Issue</th>
                                     <th>Location</th>
-                                    <th>Status</th>
-                                    <th>Reported Time</th>
-                                    <th>Resolved Time</th>
+                                    <th>Approved At</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -41,15 +37,14 @@
                                         <td>{{$item->asset->name}}</td>
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>
-                                        <td>{{$item->status}}</td>
                                         <td>{{$item->reported_at}}</td>
-                                        <td>{{$item->resolved_at}}</td>
-                                        <td style="width: 16%;text-align: center">
-                                            @if(!$item->submitted_at)
-                                                <a class="edit-link" href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
-                                                | <a class="delete-link" href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>  |
-                                                <a class="submit-link" href="{{route('maintenance_requests.submit',$item->id)}}">Submit</a>
+                                        <td style="width: 12%;text-align: center">
+                                            @if(!$item->resolved_at)
+                                                <a class="approve-link" href="{{route('maintenance_requests.resolve',$item->id)}}">Mark Resolved</a>
+                                            @else
+                                                <span>No Action</span>
                                             @endif
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,9 +57,10 @@
             </div>
         </div>
 
-        @include('auth::maintenance_requests.create')
+        {{--        @include('auth::maintenance_requests.create')--}}
         <!-- Edit Modal-->
-        <div id="edit_maintenance_requests_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="edit_maintenance_requests_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content modal-edit">
                 </div><!-- /.modal-content -->

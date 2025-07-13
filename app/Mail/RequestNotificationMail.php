@@ -8,15 +8,15 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TaskCompleteNotificationMail extends Mailable
+class RequestNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $customer;
+    public $hod;
 
-    public function __construct($customer)
+    public function __construct($hod)
     {
-        $this->customer = $customer;
+        $this->hod = $hod;
 
     }
 
@@ -28,7 +28,7 @@ class TaskCompleteNotificationMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Task Complete Notification',
+            subject: 'Maintenance Request Notification',
         );
     }
 
@@ -40,7 +40,7 @@ class TaskCompleteNotificationMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'ordermgnt::mails.task_complete',
+            view: 'auth::maintenance_requests.request_mail',
         );
     }
 

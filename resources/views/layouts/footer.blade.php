@@ -53,6 +53,15 @@
 <script src="{{asset('js/jquery.todo.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
 
+<script src="{{asset('assets/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/datatables/dataTables.bootstrap.js')}}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#datatable').dataTable();
+    } );
+</script>
+
 <script type="text/javascript">
     /* ==============================================
     Counter Up

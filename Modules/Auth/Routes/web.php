@@ -51,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
     //Maintenance Request
     Route::resource('maintenance_requests', 'MaintenanceRequestController')->except(['create', 'show', 'destroy']);
     Route::get('maintenance_requests/destroy/{id}', 'MaintenanceRequestController@destroy')->name('maintenance_requests.destroy');
+    Route::get('maintenance_requests/submit/{id}', 'MaintenanceRequestController@submitRequest')->name('maintenance_requests.submit');
+    Route::get('maintenance_requests/hod', 'MaintenanceRequestController@hodIndex')->name('maintenance_requests.hod');
+    Route::get('maintenance_requests/approve/{id}', 'MaintenanceRequestController@approveRequest')->name('maintenance_requests.approve');
+    Route::get('maintenance_requests/approved', 'MaintenanceRequestController@approvedRequests')->name('maintenance_requests.approved');
+    Route::get('maintenance_requests/resolve/{id}', 'MaintenanceRequestController@resolveRequest')->name('maintenance_requests.resolve');
 
     //Locations
     Route::resource('locations', 'LocationController')->except(['create', 'show', 'destroy']);
