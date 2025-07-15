@@ -2,6 +2,7 @@
 
 namespace Modules\Auth\Http\Controllers;
 
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -38,20 +39,39 @@ class RolesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        $role = Role::find($id);
-        $role->update($data);
-        return redirect()->back();
+        try {
+            $data = $request->all();
+            $role = Role::find($id);
+            $isExist = Role::isExistOnEdit($data['name'], $id);
+            if (!$isExist) {
+                $role->update($data);
+                $success_msg = 'Successfully Updated';
+                return redirect()->back()->with('success', $success_msg);
+            } else {
+                $error_msg = 'Role Already Exist';
+                return redirect()->back()->with('error', $error_msg);
+            }
+        } catch (Exception $ex) {
+            $error_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $error_msg);
+        }
     }
 
     public function destroy($id)
     {
-        $item = Role::find($id);
-        if ($item) {
-            $item->delete();
-            return redirect()->back();
-        }else{
-            return false;
+        try {
+            $item = Role::find($id);
+            if ($item) {
+                $item->delete();
+                $success_msg = 'Successfully Deleted';
+                return redirect()->back()->with('success', $success_msg);
+            } else {
+                $error_msg = 'Role Does not Exist';
+                return redirect()->back()->with('error', $error_msg);
+            }
+        } catch (Exception $ex) {
+            $error_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $error_msg);
         }
     }
 }

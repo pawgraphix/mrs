@@ -2,6 +2,7 @@
 
 namespace Modules\Auth\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\MaintenanceRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class AuthenticationController extends Controller
     public function index()
     {
         $params['errorMsg'] = "";
+        $params['departments'] = Department::all();
         return view('auth::index', $params);
 
     }
@@ -31,7 +33,8 @@ class AuthenticationController extends Controller
 
     public function showRegisterForm()
     {
-        return view('auth::index');
+        $departments = Department::all();
+        return view('auth::index', compact('departments'));
     }
 
     public function register(Request $request)
@@ -40,10 +43,11 @@ class AuthenticationController extends Controller
         $request->validate([
             'first_name'   => 'required|string|max:255',
             'last_name'    => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
+            'phone_number' => 'required|string|max:10',
             'gender'       => 'required|in:male,female',
             'email'        => 'required|email|unique:users',
             'password'     => 'required|string|min:6|confirmed',
+            'department_id' => 'required|exists:departments,id',
         ]);
 
         // 2. Create user
@@ -54,6 +58,7 @@ class AuthenticationController extends Controller
             'gender'       => $request->gender,
             'email'        => $request->email,
             'password'     => bcrypt($request->password),
+            'department_id' => $request->department_id,
         ]);
 
         // 3. Use the user (optional log or redirect with name)

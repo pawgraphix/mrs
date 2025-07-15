@@ -27,16 +27,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                       placeholder="Enter Email" required>
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                       placeholder="Enter Phone Number" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="phone_number">Phone Number</label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                       placeholder="Enter Phone Number" required>
+                                <label for="gender">Department</label>
+                                <select class="form-control" id="department_id" name="department_id">
+                                    <option>--- Select---</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{$department->id}}">{{$department->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div> <!-- End row -->
@@ -44,7 +48,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control" id="gender" name="gender">
+                                <select class="form-control" id="gender" name="gender" required>
                                     <option>--- Select---</option>
                                     @foreach($genders as $gender)
                                         <option value="{{$gender}}">{{$gender}}</option>
@@ -54,16 +58,25 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="trade_point_id">Trade Point</label>
-                                <select  class="form-control" id="trade_point_id" name="trade_point_id">
+                                <label for="role_id">Role</label>
+                                <select  class="form-control" id="role_id" name="role_id">
                                     <option>--- Select---</option>
-                                    @foreach($trade_points as $trade_point)
-                                        <option value="{{$trade_point->id}}">{{$trade_point->name}}</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div> <!-- End row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="Enter Email" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>

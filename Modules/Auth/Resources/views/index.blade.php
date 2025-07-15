@@ -100,13 +100,10 @@
                         @endif
 
                         <div class="form-group">
-                            <div class="col-xs-12">
+                            <div class="col-xs-6">
                                 <input class="form-control input-lg" name="first_name" type="text" required placeholder="First Name" value="{{ old('first_name') }}">
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12">
+                            <div class="col-xs-6">
                                 <input class="form-control input-lg" name="last_name" type="text" required placeholder="Last Name" value="{{ old('last_name') }}">
                             </div>
                         </div>
@@ -120,9 +117,21 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <select name="gender" class="form-control input-lg" required>
-                                    <option value="">Select Gender</option>
+                                    <option value="" disabled selected>Select Gender</option>
                                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                     <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <select name="department_id" id="department_id" class="form-control input-lg" required>
+                                    <option value="" disabled selected>Select Department</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                                            {{ $department->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

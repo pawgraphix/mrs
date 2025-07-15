@@ -156,6 +156,14 @@
                             <a href="{{route('locations.index')}}" class="waves-effect active"><i
                                         class="md md-room"></i><span> Locations</span></a>
                         </li>
+                        <li>
+                            <a href="{{route('users.index')}}" class="waves-effect active"><i
+                                    class="ion-android-user-menu"></i><span>Users</span></a>
+                        </li>
+                        <li>
+                            <a href="{{route('roles.index')}}" class="waves-effect active"><i
+                                    class="md md-room"></i><span>Roles</span></a>
+                        </li>
                     @endcan
                    @can('Student')
                         <li>

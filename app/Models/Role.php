@@ -16,4 +16,14 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public static function isExist($name): Role|null
+    {
+        return Role::where('name', $name)->first();
+    }
+
+    public static function isExistOnEdit($name, $id): Role|null
+    {
+        return Role::where([['name', $name], ['id', '!=', $id]])->first();
+    }
 }

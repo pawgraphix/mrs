@@ -22,10 +22,11 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>Full Name</th>
-                                    <th>Trade Point</th>
-                                    <th>Email</th>
                                     <th>Phone Number</th>
+                                    <th>Email</th>
                                     <th>Gender</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -35,10 +36,11 @@
                                     <tr>
                                         <td>{{++$key}}</td>
                                         <td>{{$item->full_name}}</td>
-                                        <td>{{$item->tradePoint->name}}</td>
-                                        <td>{{$item->email}}</td>
                                         <td>{{$item->phone_number}}</td>
+                                        <td>{{$item->email}}</td>
                                         <td>{{$item->gender}}</td>
+                                        <td>{{$item->role->name}}</td>
+                                        <td>{{$item->department->name}}</td>
                                         <td>
                                             <a class="edit-link" href="{{route('users.edit',$item->id)}}">Edit</a>
                                             | <a class="delete-link" href="{{route('users.destroy',$item->id)}}">Delete</a>
