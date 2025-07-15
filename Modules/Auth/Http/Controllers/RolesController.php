@@ -2,11 +2,11 @@
 
 namespace Modules\Auth\Http\Controllers;
 
+use App\Models\Role;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\UserRoles;
 
 class RolesController extends Controller
@@ -21,9 +21,21 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
-        Role::create($data);
-        return redirect()->back();
+        try {
+            $data = $request->all();
+            $isExist = Role::isExist($data['name']);
+            if (!$isExist) {
+                Role::create($data);
+                $success_msg = 'Successfully Saved';
+                return redirect()->back()->with('success', $success_msg);
+            } else {
+                $error_msg = 'Role Already Exist';
+                return redirect()->back()->with('error', $error_msg);
+            }
+        } catch (Exception $ex) {
+            $success_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $success_msg);
+        }
     }
 
     public function show($id)

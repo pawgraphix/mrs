@@ -24,11 +24,11 @@ class DepartmentController extends Controller
             $isExist = Department::isExist($data['name']);
             if (!$isExist) {
                Department::create($data);
-                $error_msg = 'Successfully Saved';
-                return redirect()->back()->with('success', $error_msg);
+                $success_msg = 'Successfully Saved';
+                return redirect()->back()->with('success', $success_msg);
             } else {
-                $success_msg = 'Department Name Already Exist';
-                return redirect()->back()->with('error', $success_msg);
+                $error_msg = 'Department Name Already Exist';
+                return redirect()->back()->with('error', $error_msg);
             }
         } catch (Exception $ex) {
             $success_msg = $ex->getMessage();
