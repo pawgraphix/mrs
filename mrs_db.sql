@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2025 at 02:48 PM
+-- Generation Time: Jul 27, 2025 at 08:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -47,12 +47,12 @@ CREATE TABLE `assets` (
 INSERT INTO `assets` (`id`, `name`, `location_id`, `registration_number`, `year_of_purchase`, `department_id`, `asset_category_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'HP ProBook 450', 1, 'CBE-ICT-001', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (2, 'Epson Printer', 2, 'CBE-ACT-004', '2021', 2, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(3, 'Wooden Desk', 5, 'CBE-FUR-027', '2020', 1, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(3, 'Wooden Desk', 5, 'CBE-FUR-027', '2020', 5, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (4, 'Library Bookshelf', 6, 'CBE-LIB-009', '2019', 6, 6, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (5, 'LED Projector', 3, 'CBE-MKT-015', '2023', 4, 2, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (6, 'Dell Desktop', 4, 'CBE-ICT-022', '2022', 5, 3, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (7, 'Office Chair', 1, 'CBE-PS-033', '2020', 3, 1, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
-(8, 'Photocopier', 5, 'CBE-GEN-050', '2021', 7, 7, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
+(8, 'Photocopier', 5, 'CBE-GEN-050', '2021', 1, 7, '2025-07-05 18:39:43', '2025-07-05 18:39:43', NULL),
 (9, 'Hp Monitor', 2, 'Lab A - Room 5', '2010', 5, 3, '2025-07-07 11:56:14', '2025-07-07 12:15:08', NULL),
 (10, 'Wardrobe', 6, 'CBE-LIB-011', '2018', 9, 6, '2025-07-07 12:42:31', '2025-07-07 12:42:34', '2025-07-07 12:42:34');
 
@@ -95,7 +95,7 @@ INSERT INTO `asset_categories` (`id`, `name`, `description`, `created_at`, `upda
 --
 
 CREATE TABLE `departments` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -115,9 +115,7 @@ INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`, `deleted_at
 (6, 'Legal Studies', '2025-07-05 16:13:45', '2025-07-05 16:13:45', NULL),
 (7, 'General Studies', '2025-07-05 16:13:45', '2025-07-05 16:13:45', NULL),
 (8, 'Research and Publications', '2025-07-05 16:13:45', '2025-07-05 16:13:45', NULL),
-(9, 'Library and Information Management', '2025-07-05 16:13:45', '2025-07-05 14:50:15', NULL),
-(10, 'Schoo', '2025-07-05 14:09:29', '2025-07-05 14:12:39', '2025-07-05 14:12:39'),
-(11, 'Sayansi na Teknolojia', '2025-07-08 07:59:42', '2025-07-08 08:02:21', '2025-07-08 08:02:21');
+(9, 'Library and Information Management', '2025-07-05 16:13:45', '2025-07-05 14:50:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -175,17 +173,31 @@ CREATE TABLE `maintenance_requests` (
   `resolved_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `submitted_by` int(11) DEFAULT NULL,
+  `submitted_at` timestamp NULL DEFAULT NULL,
+  `is_approved` tinyint(1) DEFAULT NULL,
+  `reviewed_by` int(11) DEFAULT NULL,
+  `reviewed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `maintenance_requests`
 --
 
-INSERT INTO `maintenance_requests` (`id`, `user_id`, `asset_id`, `issue`, `status`, `location_id`, `reported_at`, `resolved_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 16, 6, 'screen inaonyesha giza', 'pending', 2, '2025-07-07 15:24:33', NULL, '2025-07-07 15:24:33', '2025-07-11 12:10:17', NULL),
-(3, 30, 3, 'Sunt et labore quia', 'pending', 5, '2025-07-07 19:14:56', NULL, '2025-07-07 16:14:56', '2025-07-11 12:10:24', NULL),
-(4, 30, 3, 'Mguu mmoja mbovu', 'pending', 7, '2025-07-07 20:25:13', NULL, '2025-07-07 17:25:13', '2025-07-11 12:10:30', NULL);
+INSERT INTO `maintenance_requests` (`id`, `user_id`, `asset_id`, `issue`, `status`, `location_id`, `reported_at`, `resolved_at`, `created_at`, `updated_at`, `deleted_at`, `submitted_by`, `submitted_at`, `is_approved`, `reviewed_by`, `reviewed_at`) VALUES
+(2, 2, 6, 'screen inaonyesha giza', 'Resolved', 2, '2025-07-07 15:24:33', '2025-07-13 18:36:07', '2025-07-07 15:24:33', '2025-07-26 19:05:12', NULL, 2, '2025-07-13 13:47:57', 1, 3, '2025-07-13 14:09:54'),
+(3, 2, 3, 'Sunt et labore quia', 'Approved', 5, '2025-07-07 19:14:56', NULL, '2025-07-07 16:14:56', '2025-07-26 10:07:38', NULL, 2, '2025-07-15 16:13:29', 1, 1, '2025-07-26 10:07:38'),
+(4, 2, 3, 'Mguu mmoja mbovu', 'Submitted', 7, '2025-07-07 20:25:13', '2025-07-15 15:02:02', '2025-07-07 17:25:13', '2025-07-26 18:04:43', NULL, 2, '2025-07-26 18:04:43', 1, 3, '2025-07-15 15:01:22'),
+(5, 2, 2, 'Qui est distinctio', 'Submitted', 13, '2025-07-15 11:46:20', NULL, '2025-07-15 11:46:20', '2025-07-26 19:05:17', NULL, 2, NULL, NULL, 3, NULL),
+(6, 14, 4, 'broken', 'Approved', 3, '2025-07-15 15:15:29', NULL, '2025-07-15 15:15:29', '2025-07-26 10:07:59', NULL, 2, '2025-07-15 16:33:09', 1, 1, '2025-07-26 10:07:59'),
+(7, 2, 1, 'ha ha ha', 'pending', 4, '2025-07-26 18:26:23', NULL, '2025-07-26 18:26:23', '2025-07-26 19:05:22', NULL, NULL, NULL, NULL, 1, NULL),
+(8, 2, 3, 'Imevunjikaaaaa', 'pending', 6, '2025-07-26 18:53:56', NULL, '2025-07-26 18:53:56', '2025-07-26 19:05:26', NULL, NULL, NULL, NULL, 3, NULL),
+(9, 2, 2, 'Imeharibika', 'pending', 1, '2025-07-26 19:06:49', NULL, '2025-07-26 19:06:49', '2025-07-26 19:06:49', NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 2, 1, 'Halaaaa', 'pending', 6, '2025-07-26 19:08:37', NULL, '2025-07-26 19:08:37', '2025-07-26 19:08:37', NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 2, 8, 'Halaaa', 'pending', 7, '2025-07-26 19:09:50', NULL, '2025-07-26 19:09:50', '2025-07-26 19:09:50', NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 2, 3, 'hellooo', 'pending', 2, '2025-07-26 19:10:34', NULL, '2025-07-26 19:10:34', '2025-07-26 19:10:34', NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 2, 6, 'Duuh', 'pending', 15, '2025-07-26 19:12:45', NULL, '2025-07-26 19:12:45', '2025-07-26 19:12:45', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,37 +218,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Admin', '2025-03-02 16:44:30', '2025-04-22 04:13:31', NULL),
-(2, 'HoD', '2025-03-09 14:33:07', '2025-03-27 12:39:54', NULL),
-(3, 'User', '2025-06-03 13:57:39', '2025-06-03 13:57:43', '2025-06-03 13:57:43');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role_user`
---
-
-CREATE TABLE `role_user` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `role_user`
---
-
-INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 6, 3, '2025-07-02 23:50:48', '2025-07-03 00:20:13', NULL),
-(3, 11, 3, '2025-07-02 23:51:02', '2025-07-02 23:51:02', NULL),
-(4, 12, 3, '2025-07-02 23:54:25', '2025-07-02 23:54:25', NULL),
-(6, 14, 3, '2025-07-03 00:33:08', '2025-07-03 00:33:08', NULL),
-(7, 15, 3, '2025-07-03 00:33:13', '2025-07-03 00:33:13', NULL),
-(8, 16, 3, '2025-07-03 00:34:15', '2025-07-03 00:34:15', NULL),
-(9, 17, 3, '2025-07-03 00:34:48', '2025-07-03 00:34:48', NULL);
+(1, 'Admin', '2025-03-02 16:44:30', '2025-07-15 11:09:51', NULL),
+(2, 'HoD', '2025-03-09 14:33:07', '2025-07-26 10:17:55', NULL),
+(3, 'Student', '2025-06-03 13:57:39', '2025-07-15 11:29:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -253,6 +237,7 @@ CREATE TABLE `users` (
   `email` varchar(150) NOT NULL,
   `gender` tinytext NOT NULL,
   `password` varchar(100) NOT NULL,
+  `department_id` int(11) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -262,36 +247,20 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `first_name`, `last_name`, `phone_number`, `email`, `gender`, `password`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(6, 3, 'James', 'Paul', '+1 (875) 494-6392', 'jimmy@gmail.com', 'Male', '$2y$10$3XiqQrdrK5sqNJZunHm.rOhrOVmbCI3w.IrwFF9s943k2aP/UWVQO', '2025-03-27 15:18:34', '2025-07-03 00:25:08', NULL),
-(7, 3, 'Zahir', 'Chandler', '+1 (769) 961-1297', 'Zahir@gmail.com', 'Male', '$2y$10$5vxITAjDVFTRlcWmoUhDFOVYV4.yVtWn2J77eDBg1bB0CRdxdV6ia', '2025-05-23 07:33:56', '2025-07-03 00:25:08', NULL),
-(10, 3, 'Bruno', 'Cardenas', '+1 (841) 846-4986', 'vyzobokicu@mailinator.com', 'female', '$2y$10$reCLEypptxUr7DqePVJXwuvctXJmlH.xGUbgTgQhCnHVgPjijxFsm', '2025-07-02 20:50:48', '2025-07-03 00:25:08', NULL),
-(11, 3, 'Kyle', 'Collier', '+1 (944) 846-7445', 'sylizypify@mailinator.com', 'male', '$2y$10$VDmOQ7X7I1u2CX3Z3a/whuNSszsd3rC/a.4C0nnfMAe5I0vea.Hz.', '2025-07-02 20:51:02', '2025-07-03 00:25:08', NULL),
-(12, 3, 'Quynn', 'Harrington', '+1 (942) 772-4111', 'zalurad@mailinator.com', 'male', '$2y$10$g9m0BTH5aQzIkSpjUQ77xunC48Yw0AAAMrnbc9Q5wXDkEEQlIVRxW', '2025-07-02 20:54:25', '2025-07-03 00:25:08', NULL),
-(14, 3, 'Tamara', 'Fitzpatrick', '+1 (866) 914-9567', 'nilawij@mailinator.com', 'male', '$2y$10$cBzu5/fhp2CUDSVxEkCFy.uz3Rva9m0qgsWPbjfxOCkW4a//Gt0xe', '2025-07-02 21:33:08', '2025-07-02 21:33:08', NULL),
-(15, 3, 'David', 'Meyers', '+1 (832) 473-2238', 'karimokeca@mailinator.com', 'male', '$2y$10$o41zXU4bFusB4h0YPB9rUulFcArpOdHLqKVFpVXVo8GklzNxQnJtC', '2025-07-02 21:33:13', '2025-07-02 21:33:13', NULL),
-(16, 3, 'Berk', 'Suarez', '+1 (904) 709-2798', 'rudegaf@mailinator.com', 'female', '$2y$10$A7FGvZ3FxBVVCcznIhnBc.yPwkRLAZ0aAKHnfv2yzKB6h3hZJpRRW', '2025-07-02 21:34:15', '2025-07-02 21:34:15', NULL),
-(17, 3, 'Yvette', 'Odonnell', '+1 (964) 859-8817', 'kedosolo@mailinator.com', 'male', '$2y$10$HbiMBRVYg6qFtadq46x95O2MbY0FaE44cCekdQ55recFJOS0pmoRm', '2025-07-02 21:34:48', '2025-07-02 21:34:48', NULL),
-(18, 3, 'Graiden', 'Knapp', '+1 (497) 275-8662', 'vedonu@mailinator.com', 'female', '$2y$10$PSR47cp4tRxq4txzT7jGZOQ9ieSplg.NteYBW2YfReVpG6ZSMv7Fm', '2025-07-05 08:04:29', '2025-07-05 08:04:29', NULL),
-(19, 3, 'Bryar', 'Frost', '+1 (423) 689-1803', 'nuvec@mailinator.com', 'female', '$2y$10$RyeghwtRx79K21BsvaFTgOzGIjOwSBg1sXpCMHtBd9Ecb/S1TC7Ge', '2025-07-05 08:04:48', '2025-07-05 08:04:48', NULL),
-(20, 3, 'Brenda', 'Cain', '+1 (535) 593-6514', 'diqyxisiw@mailinator.com', 'male', '$2y$10$LgW6QIHzFpy3Kitr/oLZfes9RF2GUT81saRi6st9zpH9yWDedy/k.', '2025-07-05 08:04:55', '2025-07-05 08:04:55', NULL),
-(21, 3, 'Lydia', 'Lynch', '+1 (708) 698-9114', 'xynujif@mailinator.com', 'male', '$2y$10$6DqewfDu29uth1XxuEaSS.Fec/HWJQiwmeTZJ1X45YzRNqGUlkQTe', '2025-07-05 08:09:08', '2025-07-05 08:09:08', NULL),
-(22, 3, 'Nigel', 'Blair', '+1 (494) 808-8164', 'mucowazegi@mailinator.com', 'female', '$2y$10$HzkAiqwAqHPsZcQhdaID0exyMSTc///xuN/b/S8D3IjIuxLD0d3sa', '2025-07-05 08:10:30', '2025-07-05 08:10:30', NULL),
-(23, 3, 'Lael', 'Gates', '+1 (649) 647-7687', 'hijis@mailinator.com', 'female', '$2y$10$4u/95.amVHcbOpYr5Uu2DOqIEWVGwktnECZr9HTdCrA2Z3.GjLoIy', '2025-07-05 08:10:56', '2025-07-05 08:10:56', NULL),
-(24, 3, 'Perry', 'Collins', '+1 (262) 678-2083', 'guhuzel@mailinator.com', 'male', '$2y$10$d93.fqwDVndbj.OuYdeufu.4SbQUstJ6uTKigwzRtbWZfkZc4W0gW', '2025-07-05 08:13:24', '2025-07-05 08:13:24', NULL),
-(25, 3, 'Mari', 'Wolfe', '+1 (257) 931-9296', 'wafog@mailinator.com', 'male', '$2y$10$8JEoS4trL5i3ugiE/OO5NuueXTTk4DeyCMvao/YQcW4a856x1cYaq', '2025-07-05 08:14:52', '2025-07-05 08:14:52', NULL),
-(26, 3, 'Patricia', 'Bradford', '+1 (756) 248-2225', 'sifobyq@mailinator.com', 'male', '$2y$10$zqaqOxYcMRd6tqy1ARH07.J2rb0bPxr5xQnm/rtV8bUf91qdHn8.e', '2025-07-05 08:15:45', '2025-07-05 08:15:45', NULL),
-(27, 3, 'Chancellor', 'Montoya', '+1 (671) 369-6899', 'fawuje@mailinator.com', 'female', '$2y$10$xiXtyznbRIJja53wkDw1a.2cLDwZdxkPz56VWmz2ptJQLCmgIQxG.', '2025-07-05 08:16:23', '2025-07-05 08:16:23', NULL),
-(28, 3, 'Whitney', 'Leblanc', '+1 (317) 208-8218', 'xegyku@mailinator.com', 'female', '$2y$10$1H.VpB/vuFc1JzV0dAUxyegd72NEx4iShV9XpywZQzlTn2YeFnRqG', '2025-07-05 08:17:43', '2025-07-05 08:17:43', NULL),
-(29, 3, 'Maria', 'Abunuasi', '0763976000', 'abunuasimaria8@gmail.com', 'male', '$2y$10$5U9RevxlKNErIpSMyb9ceu8VxRQCFBb2IMyqUA0EFs0jnlRW/GJsC', '2025-07-05 09:35:32', '2025-07-05 09:35:32', NULL),
-(30, 3, 'James', 'Rodriquez', '+1 (941) 295-9381', 'james@gmail.com', 'male', '$2y$10$Mf6vTDpYW.py//q/ji.YBusfr5taBYlYD8fLXoBGP3mVCCKVVLhoi', '2025-07-05 12:35:43', '2025-07-05 12:35:43', NULL),
-(31, 3, 'Alexa', 'Harrington', '+1 (478) 507-8117', 'remyvy@mailinator.com', 'female', '$2y$10$9zOQHD7Scfys1RfwClp78ePxvCP//HnHzuxd9zUgauzRAGsi46ufO', '2025-07-06 13:57:09', '2025-07-06 13:57:09', NULL),
-(32, 3, 'Donna', 'York', '+1 (691) 452-2642', 'zomyhic@mailinator.com', 'female', '$2y$10$XujX.yX31ip7Q1yBlaZxFO9yW9WCLV7FJWwenyLmB/bsTsSgx7KNi', '2025-07-07 16:31:40', '2025-07-07 16:31:40', NULL),
-(33, 3, 'Zachary', 'Navarro', '+1 (491) 509-4661', 'hopinaw@mailinator.com', 'female', '$2y$10$nuX8co0npZCDPS2VkTCs0.YQ3WcyOeABEPLcpu0OJxoOga.NHrc4K', '2025-07-07 16:34:44', '2025-07-07 16:34:44', NULL),
-(34, 3, 'Kai', 'Carpenter', '+1 (528) 583-2785', 'talapyru@mailinator.com', 'male', '$2y$10$A0V.lyk8DUm8vbqpXwowmOzRR1Iqx4etZ1Bbm9qzbBX2NdAhExfJC', '2025-07-07 16:43:48', '2025-07-07 16:43:48', NULL),
-(35, 3, 'Halima', 'Ramadhani', '0765566786', 'halima@gmail.com', 'female', '$2y$10$VadeujEw7/4Vs49mFF.X2.T/e8zTCAd.yLYmh/vh8DC69j16XBQx2', '2025-07-08 03:12:18', '2025-07-08 03:12:18', NULL),
-(36, 3, 'Macaulay', 'Oliver', '+1 (949) 574-1156', 'kupa@mailinator.com', 'female', '$2y$10$QbeG0CHidQnPpwklaF6nHe/JjFdGS1AVvWDkLmSmoadW3xzp2AZ3q', '2025-07-08 07:53:28', '2025-07-08 07:53:28', NULL),
-(37, 3, 'Grady', 'Welch', '+1 (142) 428-1735', 'grady@gmail.com', 'male', '$2y$10$MUPitgOACP830LvJwdvs..BWHNHo5RilQeYnvL1ZW8AOcQkzwFW62', '2025-07-08 07:53:59', '2025-07-08 07:53:59', NULL);
+INSERT INTO `users` (`id`, `role_id`, `first_name`, `last_name`, `phone_number`, `email`, `gender`, `password`, `department_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 'James', 'Paul', '0765392816', 'pawgraphix@gmail.com', 'male', '$2y$10$wE2YF8oYSqOvkNGrgXKBsuxkmMLcYijcQnoydtPPK25VrkKYpVJju', 5, '2025-07-15 07:35:18', '2025-07-15 15:19:58', NULL),
+(2, 3, 'Omega', 'Nemes', '0657362817', 'omega255@gmail.com', 'female', '$2y$10$W2Z4L4joOpvJNj0UuLCLVeSUHRPSUmoBrcCbCTp.s30rHJ9Hsywj.', 2, '2025-07-15 07:37:19', '2025-07-15 08:14:36', NULL),
+(3, 2, 'Suzy', 'John', '0622376278', 'suzyanaljonh@gmail.com', 'female', '$2y$10$zwk0f/QS9XUu43Hc9PhES.7D9v0yLvyy8mXmEbHyl/2s9R5IBV38a', 1, '2025-07-15 08:00:02', '2025-07-26 18:52:50', NULL),
+(4, 3, 'Guinevere', 'Mcclure', '0782918627', 'mfano@gmail.com', 'female', '$2y$10$kI41YAYg.S5thS5oZA5YsOMyxFqoKIoC83AA8pYPCtYAY2t0JCnw6', 5, '2025-07-15 08:31:33', '2025-07-15 08:31:33', NULL),
+(14, 1, 'Kipajo', 'Kivuli', '0789654732', 'kipajo@gmail.com', 'male', '$2y$10$Yu1LKPhBQnaAOftq/Vf8oeQaUBTVkIy/RVHvf7kGkS1TRE9fflYIq', 7, '2025-07-15 15:14:05', '2025-07-26 19:11:43', NULL),
+(23, 2, 'Linda', 'Mussa', '0700000001', 'linda.mussa@cbe.ac.tz', 'female', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 1, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(24, 2, 'Daniel', 'Joseph', '0700000002', 'daniel.joseph@cbe.ac.tz', 'male', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 2, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(25, 2, 'Faith', 'Andrew', '0700000003', 'faith.andrew@cbe.ac.tz', 'female', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 3, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(26, 2, 'George', 'Lameck', '0700000004', 'george.lameck@cbe.ac.tz', 'male', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 4, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(27, 2, 'Dogo', 'Janja', '0700000006', 'jimmy@gmail.com', 'male', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 6, '2025-07-15 15:36:02', '2025-07-26 18:14:05', NULL),
+(28, 2, 'Esther', 'Mwakalinga', '0700000007', 'esther.mwakalinga@cbe.ac.tz', 'female', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 7, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(29, 2, 'Felix', 'Chacha', '0700000008', 'felix.chacha@cbe.ac.tz', 'male', '$2y$10$JvURZFX07W6aGkFZUmEQ6OK3I1eEbIedh0/zchUExMFx8S2XP7IxC', 8, '2025-07-15 15:36:02', '2025-07-15 15:36:02', NULL),
+(30, 2, 'Dogo', 'Janja', '0789276351', 'jiminho360@gmail.com', 'male', '$2y$10$G1nYQzJ4NMfe.HQV.s88qu8kUvGzGfihDX2YCjjaq/.7TUCrl0yyC', 7, '2025-07-26 18:14:41', '2025-07-26 18:15:41', NULL);
 
 --
 -- Indexes for dumped tables
@@ -331,7 +300,9 @@ ALTER TABLE `maintenance_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_asset` (`asset_id`),
   ADD KEY `fk_user` (`user_id`),
-  ADD KEY `fk_location` (`location_id`);
+  ADD KEY `fk_location` (`location_id`),
+  ADD KEY `submitted_by` (`submitted_by`),
+  ADD KEY `reviewed_by` (`reviewed_by`);
 
 --
 -- Indexes for table `roles`
@@ -340,19 +311,12 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role_user`
---
-ALTER TABLE `role_user`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `role_id` (`role_id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_users_role_id` (`role_id`);
+  ADD KEY `fk_users_role_id` (`role_id`),
+  ADD KEY `fk_users_department_id` (`department_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -374,7 +338,7 @@ ALTER TABLE `asset_categories`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `locations`
@@ -386,25 +350,19 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `role_user`
---
-ALTER TABLE `role_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
@@ -424,20 +382,16 @@ ALTER TABLE `assets`
 ALTER TABLE `maintenance_requests`
   ADD CONSTRAINT `fk_asset` FOREIGN KEY (`asset_id`) REFERENCES `assets` (`id`),
   ADD CONSTRAINT `fk_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`),
-  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `role_user`
---
-ALTER TABLE `role_user`
-  ADD CONSTRAINT `role_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `role_user_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `maintenance_requests_ibfk_1` FOREIGN KEY (`submitted_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `maintenance_requests_ibfk_2` FOREIGN KEY (`reviewed_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `fk_users_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+  ADD CONSTRAINT `fk_users_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
