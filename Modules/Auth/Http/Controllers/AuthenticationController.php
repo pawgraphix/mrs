@@ -81,7 +81,7 @@ class AuthenticationController extends Controller
     {
         $totalIssues = MaintenanceRequest::count();
         $pendingIssues = MaintenanceRequest::where('status', 'pending')->count();
-        $inProgressIssues = MaintenanceRequest::where('status', 'in_progress')->count();
+        $submitted = MaintenanceRequest::where('status', 'Submitted')->count();
         $resolvedIssues = MaintenanceRequest::where('status', 'resolved')->count();
 
         // Notifications kwa mtumiaji aliye-login (kama unatumia user_id kwenye notifications)
@@ -91,7 +91,7 @@ class AuthenticationController extends Controller
         return view('auth::dashboard', compact(
             'totalIssues',
             'pendingIssues',
-            'inProgressIssues',
+            'submitted',
             'resolvedIssues',
             //'notifications',
             'recentActivities'

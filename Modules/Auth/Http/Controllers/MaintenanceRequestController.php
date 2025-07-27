@@ -40,6 +40,7 @@ class MaintenanceRequestController extends Controller
     {
         $params['item'] = MaintenanceRequest::find($id);
         $params['locations'] = Location::orderBy('name')->get();
+        $params['assets'] = Asset::orderBy('name')->get();
         return view('auth::maintenance_requests.edit', $params);
     }
 
@@ -137,7 +138,6 @@ class MaintenanceRequestController extends Controller
         $param['items'] = MaintenanceRequest::where('is_approved', true)->get();
         return view('auth::maintenance_requests.approved', $param);
     }
-
     public function resolveRequest($id)
     {
         try {

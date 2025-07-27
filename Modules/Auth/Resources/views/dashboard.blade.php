@@ -11,7 +11,7 @@
         </div>
     </div>
 
-
+    {{-- Stats Cards --}}
     <div class="row">
         <div class="col-md-6 col-sm-6 col-lg-3">
             <div class="mini-stat clearfix bx-shadow">
@@ -35,8 +35,8 @@
             <div class="mini-stat clearfix bx-shadow">
                 <span class="mini-stat-icon bg-pink"><i class="ion-loop"></i></span>
                 <div class="mini-stat-info text-right text-muted">
-                    <span class="counter">{{ $inProgressIssues }}</span>
-                    Issues In Progress
+                    <span class="counter">{{ $submitted }}</span>
+                    Submitted Requests
                 </div>
             </div>
         </div>
@@ -49,66 +49,6 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End row-->
-
-    {{-- Report New Issue Button --}}
-    <div class="row m-t-20">
-        <div class="col-md-12 text-center">
-            <a href="{{ route('maintenance_requests.index') }}" class="btn btn-primary btn-lg">
-                Report New Issue
-            </a>
-        </div>
     </div>
 
-    {{-- Status Pie Chart --}}
-    <div class="row m-t-30">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Issue Status Overview</div>
-                <div class="panel-body">
-                    <canvas id="issueStatusChart" height="180"></canvas>
-                </div>
-            </div>
-        </div>
-
-        {{-- Latest Notifications --}}
-        <!---  <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">🔔 Latest Notifications</div>
-                <div class="panel-body">
-                    <ul class="list-group">
-
-                    </ul>
-                </div>
-            </div>
-        </div>--->
-    </div>
-
-    {{-- Recent Activity Timeline --}}
-    <div class="row m-t-20">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Recent Activity Timeline</div>
-                <div class="panel-body">
-                    <ul class="timeline">
-                        @foreach($recentActivities as $activity)
-                            <li>
-                                <div class="timeline-badge"><i class="ion-alert"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h5 class="timeline-title">{{ $activity->title }}</h5>
-                                        <p><small class="text-muted"><i class="ion-clock"></i> {{ $activity->created_at->diffForHumans() }}</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>{{ $activity->description }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-

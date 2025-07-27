@@ -90,7 +90,7 @@
                         </li>--->
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img
-                                    src="images/avatar-1.png" alt="user-img" class="img-circle"> </a>
+                                    src="{{asset('images/avatar-1.png')}}" alt="user-img" class="img-circle"> </a>
                             <ul class="dropdown-menu">
                                <!--- <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile</a></li>
                                 <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
@@ -168,7 +168,7 @@
                    @can('Student')
                         <li>
                             <a href="{{route('maintenance_requests.index')}}" class="waves-effect active"><i
-                                        class="md md-home"></i><span> Maintenance Requests </span></a>
+                                        class="md md-query-builder"></i><span> Maintenance Requests </span></a>
                         </li>
                    @endcan
 
