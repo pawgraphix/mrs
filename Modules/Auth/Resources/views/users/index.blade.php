@@ -79,22 +79,5 @@
                 $('#edit_user_modal').modal({show: true});
             });
         });
-
-        function notify(){
-/*            $.Notification.notify(
-                'success',
-                'bottom right',
-                'Sample Notification',
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.'
-            );*/
-
-            $.Notification.notify(
-                'success',
-                'top right',
-                'Sample Notification',
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.'
-            );
-        }
-
     </script>
 @endsection

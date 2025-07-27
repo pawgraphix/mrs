@@ -50,8 +50,7 @@
                     <select class="form-control" id="gender" name="gender">
                         <option disabled selected>--- Select ---</option>
                         @foreach($genders as $gender)
-                            <option
-                                value="{{ $gender }}" {{ $item->gender == $gender ? 'selected' : '' }}>{{ $gender }}</option>
+                            <option value="{{ $gender }}" {{ $item->gender == $gender ? 'selected' : '' }}>{{ $gender }}</option>
                         @endforeach
                     </select>
                 </div>

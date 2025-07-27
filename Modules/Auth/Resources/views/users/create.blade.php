@@ -34,15 +34,16 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="gender">Department</label>
-                                <select class="form-control" id="department_id" name="department_id">
-                                    <option>--- Select---</option>
-                                    @foreach($departments as $department)
-                                        <option value="{{$department->id}}">{{$department->name}}</option>
+                                <label for="department_id">Department</label>
+                                <select class="form-group" id="department_id" name="department_id" required style="width: 100%">
+                                    <option>---Select---</option>
+                                    @foreach($departments as $location)
+                                        <option value="{{$location->id}}">{{$location->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
                     </div> <!-- End row -->
                     <div class="row">
                         <div class="col-md-6">
@@ -59,7 +60,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="role_id">Role</label>
-                                <select  class="form-control" id="role_id" name="role_id">
+                                <select class="form-control" id="role_id" name="role_id">
                                     <option>--- Select---</option>
                                     @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>

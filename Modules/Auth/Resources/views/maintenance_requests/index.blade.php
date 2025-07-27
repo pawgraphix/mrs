@@ -46,9 +46,13 @@
                                         <td>{{$item->resolved_at}}</td>
                                         <td style="width: 16%;text-align: center">
                                             @if(!$item->submitted_at)
-                                                <a class="edit-link" href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
-                                                | <a class="delete-link" href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>  |
-                                                <a class="submit-link" href="{{route('maintenance_requests.submit',$item->id)}}">Submit</a>
+                                                <a class="edit-link"
+                                                   href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
+                                                | <a class="delete-link"
+                                                     href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>
+                                                |
+                                                <a class="submit-link"
+                                                   href="{{route('maintenance_requests.submit',$item->id)}}">Submit</a>
                                             @endif
                                         </td>
                                     </tr>
@@ -64,7 +68,8 @@
 
         @include('auth::maintenance_requests.create')
         <!-- Edit Modal-->
-        <div id="edit_maintenance_requests_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="edit_maintenance_requests_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content modal-edit">
                 </div><!-- /.modal-content -->
@@ -82,6 +87,10 @@
             $('.modal-edit').load(dataURL, function () {
                 $('#edit_maintenance_requests_modal').modal({show: true});
             });
+        });
+
+        $('#edit_maintenance_requests_modal').on('shown.bs.modal', function (e) {
+            $('select').select2();
         });
     </script>
 @endsection
