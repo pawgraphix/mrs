@@ -7,6 +7,7 @@ use App\Mail\RequestNotificationMail;
 use App\Models\Asset;
 use App\Models\Location;
 use App\Models\MaintenanceRequest;
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -92,17 +93,21 @@ class MaintenanceRequestController extends Controller
             $maintenanceRequest->update();
 
             $department_id = $maintenanceRequest->asset->department_id;
-
-            $hod = User::where('department_id', $department_id)->first();
-            if ($hod) {
-                Mail::to($hod->email)->send(new RequestNotificationMail($hod));
-                $success_msg = 'Successfully Submitted';
-                return redirect()->back()->with('success', $success_msg);
-            } else {
-                $error_msg = "Hod for this department does not exist";
+            $role = Role::where('name','HoD')->first();
+            if ($role){
+                $hod = User::where('department_id', $department_id)->where('role_id',$role->id)->first();
+                if ($hod) {
+                    Mail::to($hod->email)->send(new RequestNotificationMail($hod));
+                    $success_msg = 'Successfully Submitted';
+                    return redirect()->back()->with('success', $success_msg);
+                } else {
+                    $error_msg = "Hod for this department does not exist";
+                    return redirect()->back()->with('error', $error_msg);
+                }
+            }else{
+                $error_msg = "Hod role does not exist";
                 return redirect()->back()->with('error', $error_msg);
             }
-
         } catch (Exception $ex) {
             $error_msg = $ex->getMessage();
             return redirect()->back()->with('error', $error_msg);
