@@ -28,9 +28,9 @@
                                 <tbody>
                                 @foreach($items as $key=>$item)
                                     <tr>
-                                        <td>{{++$key}}</td>
+                                        <td style="width: 5%">{{++$key}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td>
+                                        <td style="width: 10%">
                                            <a class="edit-link" href="{{route('roles.edit',$item->id)}}">Edit</a>
                                             | <a class="delete-link" href="{{route('roles.destroy',$item->id)}}">Delete</a>
                                         </td>
