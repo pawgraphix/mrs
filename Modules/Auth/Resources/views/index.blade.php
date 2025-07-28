@@ -18,15 +18,21 @@
     <link href="{{ asset('css/waves-effect.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+{{--    <style>--}}
+{{--        body{--}}
+{{--            background-image: "images/bg.jpg";--}}
+{{--        }--}}
+{{--    </style>--}}
 
     <script src="{{ asset('js/modernizr.min.js') }}"></script>
 </head>
 <body>
+{{--style="width: 100%; height: 1400px"--}}
 <div class="wrapper-page">
     <div class="panel panel-color panel-primary panel-pages">
         <div class="panel-heading bg-img">
             <div class="bg-overlay"></div>
-            <h3 class="text-center m-t-10 text-white" id="form-title">Login to <strong>MRS</strong></h3>
+            <h3 class="text-center m-t-10 text-white" id="form-title">Login to <strong>MaReS</strong></h3>
         </div>
 
         <div class="panel-body">
@@ -205,7 +211,7 @@
             registerBtn.classList.remove('active');
             loginTab.classList.add('in', 'active');
             registerTab.classList.remove('in', 'active');
-            formTitle.innerHTML = 'Login to <strong>MRS</strong>';
+            formTitle.innerHTML = 'Login to <strong>MaReS</strong>';
         }
 
         function switchToRegister() {
@@ -213,7 +219,7 @@
             loginBtn.classList.remove('active');
             registerTab.classList.add('in', 'active');
             loginTab.classList.remove('in', 'active');
-            formTitle.innerHTML = 'Register to <strong>MRS</strong>';
+            formTitle.innerHTML = 'Register to <strong>MaReS</strong>';
         }
 
         loginBtn.addEventListener('click', switchToLogin);

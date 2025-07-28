@@ -6,7 +6,7 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
     <link rel="shortcut icon" href="images/favicon_1.ico">
-    <title>MRS</title>
+    <title>Maintenance Reporting System</title>
 
     <!-- Base Css Files -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/>
@@ -60,7 +60,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <div class="text-center">
-                <a href="index.html" class="logo"><i class="md md-terrain"></i> <span>MRS System </span></a>
+                <a href="index.html" class="logo"><i class="md md-terrain"></i> <span>MaReS System </span></a>
             </div>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
@@ -231,7 +231,7 @@
         </div> <!-- content -->
 
         <footer class="footer text-right">
-            2025 © Mrs
+            2025 © MaReS
         </footer>
 
     </div>

@@ -42,8 +42,8 @@
                                         <td>{{$item->role->name}}</td>
                                         <td>{{$item->department->name}}</td>
                                         <td>
-                                            <a class="edit-link" href="{{route('users.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link" href="{{route('users.destroy',$item->id)}}">Delete</a>
+                                            <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" href="{{route('users.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" href="{{route('users.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

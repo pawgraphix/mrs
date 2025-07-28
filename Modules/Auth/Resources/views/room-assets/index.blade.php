@@ -43,8 +43,8 @@
                                         <td>{{$item->department->name}}</td>
                                         <td>{{$item->assetCategory->name}}</td>
                                         <td style="width: 12%;text-align: center">
-                                            <a class="edit-link" href="{{route('room-assets.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link" href="{{route('room-assets.destroy',$item->id)}}">Delete</a>
+                                            <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" href="{{route('room-assets.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" href="{{route('room-assets.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,8 +79,11 @@
             });
         });
 
-        $('#edit_modal').on('shown.bs.modal',function(){
-            $('.dd_select').select2();
+        // $('#edit_modal').on('shown.bs.modal',function(){
+        //     $('.dd_select').select2();
+        // });
+        $('#edit_modal').on('shown.bs.modal', function (e) {
+            $('select').select2();
         });
     </script>
 @endsection

@@ -35,8 +35,8 @@
                                         <td>{{$item->name}}</td>
                                         <td>{{$item->description}}</td>
                                         <td style="width: 12%;text-align: center">
-                                            <a class="edit-link" href="{{route('asset_categories.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link" href="{{route('asset_categories.destroy',$item->id)}}">Delete</a>
+                                            <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" href="{{route('asset_categories.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" href="{{route('asset_categories.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

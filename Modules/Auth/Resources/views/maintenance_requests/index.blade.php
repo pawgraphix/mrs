@@ -22,10 +22,10 @@
                                 <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Reporter Name</th>
+{{--                                    <th>Reporter Name</th>--}}
                                     <th>Asset Name</th>
-                                    <th>Issue</th>
                                     <th>Location</th>
+                                    <th>Issue</th>
                                     <th>Status</th>
                                     <th>Reported Time</th>
                                     <th>Resolved Time</th>
@@ -37,21 +37,21 @@
                                 @foreach($items as $key=>$item)
                                     <tr>
                                         <td style="width: 5%">{{++$key}}</td>
-                                        <td>{{$item->user->first_name." " .$item->user->last_name}}</td>
+{{--                                        <td>{{$item->user->full_name}}</td>--}}
                                         <td>{{$item->asset->name}}</td>
-                                        <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>
+                                        <td>{{$item->issue}}</td>
                                         <td>{{$item->status}}</td>
                                         <td>{{$item->reported_at}}</td>
                                         <td>{{$item->resolved_at}}</td>
-                                        <td style="width: 16%;text-align: center">
+                                        <td style="width: 18%;text-align: center">
                                             @if(!$item->submitted_at)
-                                                <a class="edit-link"
+                                                <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" type="button"
                                                    href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
-                                                | <a class="delete-link"
+                                                | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" type="button"
                                                      href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>
                                                 |
-                                                <a class="submit-link"
+                                                <a class="submit-link btn btn-success waves-effect waves-light m-b-5" type="button"
                                                    href="{{route('maintenance_requests.submit',$item->id)}}">Submit</a>
                                             @endif
                                         </td>

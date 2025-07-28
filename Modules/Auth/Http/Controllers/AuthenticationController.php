@@ -64,7 +64,7 @@ class AuthenticationController extends Controller
         // 3. Use the user (optional log or redirect with name)
         return redirect()
             ->route('index')
-            ->with('success', 'Welcome ' . $user->first_name . '! to Mrs, Now Please Login')
+            ->with('success', 'Welcome ' . $user->first_name . '! to MaRes, Now Please Login')
             ->with('user', $user);
 
     }

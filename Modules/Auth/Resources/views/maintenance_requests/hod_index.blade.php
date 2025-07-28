@@ -38,10 +38,10 @@
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>
                                         <td>{{$item->reported_at}}</td>
-                                        <td style="width: 12%;text-align: center">
-                                            <a class="approve-link"
+                                        <td style="width: 14%;text-align: center">
+                                            <a class="approve-link btn btn-success waves-effect waves-light m-b-5" type="button"
                                                href="{{route('maintenance_requests.approve',$item->id)}}">Approve</a> |
-                                            <a class="approve-link" href="#">Reject</a>
+                                            <a class="reject-link btn btn-danger waves-effect waves-light m-b-5" type="button" href="#">Reject</a>
                                         </td>
                                     </tr>
                                 @endforeach
