@@ -60,7 +60,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <div class="text-center">
-                <a href="index.html" class="logo"><i class="md md-terrain"></i> <span>MaReS System </span></a>
+                <a href="{{route('dashboard')}}" class="logo"><i class="md md-terrain"></i> <span>MaReS System </span></a>
             </div>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
@@ -139,6 +139,7 @@
                         <a href="{{route('dashboard')}}" class="waves-effect active"><i
                                 class="md md-home"></i><span> Dashboard </span></a>
                     </li>
+
                     @can('Admin')
                         <li>
                             <a href="{{route('departments.index')}}" class="waves-effect active"><i
@@ -165,10 +166,15 @@
                                     class="md md-room"></i><span>Roles</span></a>
                         </li>
                     @endcan
-                   @can('Student')
-                        <li>
-                            <a href="{{route('maintenance_requests.index')}}" class="waves-effect active"><i
-                                        class="md md-query-builder"></i><span> Maintenance Requests </span></a>
+
+                    @can('Student')
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect"><i class="md md-mail"></i><span>Maintenance Req</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('maintenance_requests.index')}}">Request</a></li>
+                                <li><a href="{{route('maintenance_requests.resolved')}}">Resolved</a></li>
+                                <li><a href="{{route('maintenance_requests.rejected')}}">Rejected</a></li>
+                            </ul>
                         </li>
                    @endcan
 
@@ -178,36 +184,12 @@
                             <ul class="list-unstyled">
                                 <li><a href="{{route('maintenance_requests.hod')}}">Incoming</a></li>
                                 <li><a href="{{route('maintenance_requests.approved')}}">Approved</a></li>
-{{--                                <li><a href="email-read.html">Rejected</a></li>--}}
+                                <li><a href="{{route('maintenance_requests.resolved')}}">Resolved</a></li>
+                                <li><a href="{{route('maintenance_requests.rejected')}}">Rejected</a></li>
                             </ul>
                         </li>
                     @endcan
 
-                   <!-- <li class="has_sub">
-                        <a href="#" class="waves-effect"><i class="md md-mail"></i><span> User Management </span><span
-                                class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('roles.index')}}">Roles</a></li>
-                            <li><a href="{{route('order.index')}}">Order</a></li>
-                        </ul>
-                    </li>--->
-                  <!--<li class="has_sub">
-                        <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Order Management </span><span
-                                class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('order.index')}}">Users</a></li>
-                        </ul>
-                    <li class="has_sub">
-                        <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Setups </span><span
-                                class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('trade-point.index')}}">Trade Points</a></li>
-{{--                            <li><a href="{{route('completion-stage.index')}}">Completion Stages</a></li>--}}
-{{--                            <li><a href="{{route('OrderCompletionStatus.index')}}">Order Completion Status</a></li>--}}
-                            <li><a href="{{route('cloth-type.index')}}">Clothes Types</a></li>
-                            <li><a href="{{route('customer.index')}}">Customers</a></li>
-                        </ul>
-                    </li>--->
                 </ul>
                 <div class="clearfix"></div>
             </div>

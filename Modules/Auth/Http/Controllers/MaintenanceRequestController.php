@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RejectedNotificationMail;
 use App\Mail\RequestNotificationMail;
 use App\Mail\ResolvedNotificationMail;
 use App\Models\Asset;
@@ -13,6 +14,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class MaintenanceRequestController extends Controller
@@ -20,7 +22,8 @@ class MaintenanceRequestController extends Controller
     public function index()
     {
         $userId = auth()->id();
-        $param['items'] = MaintenanceRequest::where('user_id', $userId)->latest()->get();
+        $param['items'] = MaintenanceRequest::where('user_id', $userId)
+            ->where('is_approved','!=',true)->latest()->get();
         $param['assets'] = Asset::all();
         $param['locations'] = Location::all();
         return view('auth::maintenance_requests.index', $param);
@@ -32,7 +35,7 @@ class MaintenanceRequestController extends Controller
             $data = $request->all();
             $data['user_id'] = auth()->id();
             $data['department_id'] = Asset::find($data['asset_id'])->department_id;
-            $data['request_id'] = 'REQ-'.now()->timestamp;
+            $data['request_id'] = 'REQ-' . now()->timestamp;
             MaintenanceRequest::create($data);
             $error_msg = 'Successfully Saved';
             return redirect()->back()->with('success', $error_msg);
@@ -92,9 +95,9 @@ class MaintenanceRequestController extends Controller
             $maintenanceRequest->update();
 
             $department_id = $maintenanceRequest->asset->department_id;
-            $role = Role::where('name','HoD')->first();
-            if ($role){
-                $hod = User::where('department_id', $department_id)->where('role_id',$role->id)->first();
+            $role = Role::where('name', 'HoD')->first();
+            if ($role) {
+                $hod = User::where('department_id', $department_id)->where('role_id', $role->id)->first();
                 if ($hod) {
                     Mail::to($hod->email)->send(new RequestNotificationMail($hod));
                     $success_msg = 'Successfully Submitted';
@@ -103,7 +106,7 @@ class MaintenanceRequestController extends Controller
                     $error_msg = "Hod for this department does not exist";
                     return redirect()->back()->with('error', $error_msg);
                 }
-            }else{
+            } else {
                 $error_msg = "Hod role does not exist";
                 return redirect()->back()->with('error', $error_msg);
             }
@@ -157,7 +160,7 @@ class MaintenanceRequestController extends Controller
 
             //Send Email to Student
             $student = User::find($maintenanceRequest->user_id);
-            Mail::to($student->email)->send(new ResolvedNotificationMail($student,$maintenanceRequest));
+            Mail::to($student->email)->send(new ResolvedNotificationMail($student, $maintenanceRequest));
 
             $success_msg = 'Successfully Resolved';
             return redirect()->back()->with('success', $success_msg);
@@ -165,5 +168,65 @@ class MaintenanceRequestController extends Controller
             $error_msg = $ex->getMessage();
             return redirect()->back()->with('error', $error_msg);
         }
+    }
+
+    public function resolvedRequests()
+    {
+        if (Gate::allows('Student')) {
+            $userId = Auth::id();
+            $param['items'] = MaintenanceRequest::whereNotNull('resolved_at')
+                ->where('user_id', $userId)->get();
+        } else {
+            $departmentId = User::getCurrentUserDepartmentId();
+            $param['items'] = MaintenanceRequest::whereNotNull('resolved_at')
+                ->where('department_id', $departmentId)->get();
+        }
+        return view('auth::maintenance_requests.resolved', $param);
+    }
+
+    public function rejectForm($id)
+    {
+        $params['item'] = MaintenanceRequest::find($id);
+        return view('auth::maintenance_requests.reject_form', $params);
+    }
+
+    public function rejectRequest(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $maintenanceRequest = MaintenanceRequest::find($data['id']);
+            $maintenanceRequest->status = 'Rejected';
+            $maintenanceRequest->reviewed_by = auth()->id();
+            $maintenanceRequest->reviewed_at = now();
+            $maintenanceRequest->is_approved = false;
+            $maintenanceRequest->reject_comment = $data['reject_comment'];
+            $maintenanceRequest->submitted_by = null;
+            $maintenanceRequest->submitted_at = null;
+            $maintenanceRequest->update();
+
+            //Send Email to Student
+            $student = User::find($maintenanceRequest->user_id);
+            Mail::to($student->email)->send(new RejectedNotificationMail($student, $maintenanceRequest));
+
+            $success_msg = 'Successfully Rejected';
+            return redirect()->back()->with('success', $success_msg);
+        } catch (Exception $ex) {
+            $error_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $error_msg);
+        }
+    }
+
+    public function rejectedRequests()
+    {
+        if (Gate::allows('Student')) {
+            $userId = Auth::id();
+            $param['items'] = MaintenanceRequest::where('is_approved', false)
+                ->where('user_id', $userId)->get();
+        } else {
+            $departmentId = User::getCurrentUserDepartmentId();
+            $param['items'] = MaintenanceRequest::where('is_approved', false)
+                ->where('department_id', $departmentId)->get();
+        }
+        return view('auth::maintenance_requests.rejected', $param);
     }
 }
