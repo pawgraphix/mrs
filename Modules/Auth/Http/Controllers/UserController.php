@@ -116,7 +116,7 @@ class UserController extends Controller
             $user = User::find($userId);
 
             if (!Hash::check($data['old_password'], $user->password)) {
-                return redirect()->back()->with('error', 'Your current password is incorrect');
+                return redirect()->back()->with('error', 'Your Old Password is incorrect');
             }
 
             if ($data['password'] != $data['conf_password']) {
@@ -125,6 +125,7 @@ class UserController extends Controller
 
             $user->password = Hash::make($data['password']);
             $user->update();
+
             $success_msg = 'Password Successfully Changed';
             return redirect()->back()->with('success', $success_msg);
         } catch (Exception $ex) {
