@@ -34,12 +34,12 @@
                                 @foreach($items as $key=>$item)
                                     <tr>
                                         <td style="width: 5%">{{++$key}}</td>
-                                        <td>{{$item->request_id}}</td>
-                                        <td>{{$item->user->first_name." " .$item->user->last_name}}</td>
-                                        <td>{{$item->asset->name}}</td>
+                                        <td style="width: 11%">{{$item->request_id}}</td>
+                                        <td style="width: 12%">{{$item->user->first_name." " .$item->user->last_name}}</td>
+                                        <td style="width: 12%">{{$item->asset->name}}</td>
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>
-                                        <td>{{$item->reported_at}}</td>
+                                        <td style="width: 12%">{{$item->reported_at}}</td>
                                         <td style="width: 14%;text-align: center">
                                             <a class="approve-link btn btn-success btn-sm waves-effect waves-light m-b-5" type="button"
                                                href="{{route('maintenance_requests.approve',$item->id)}}">Approve</a> |

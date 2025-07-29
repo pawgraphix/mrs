@@ -194,7 +194,7 @@
             el.style.opacity = 0;
             setTimeout(() => el.remove(), 500);
         });
-    }, 5000);
+    }, 5000); //5 Seconds
 </script>
 
 <!-- Dynamic tab control -->

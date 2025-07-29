@@ -41,9 +41,9 @@
                                         <td>{{$item->gender}}</td>
                                         <td>{{$item->role->name}}</td>
                                         <td>{{$item->department->name}}</td>
-                                        <td>
-                                            <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" href="{{route('users.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" href="{{route('users.destroy',$item->id)}}">Delete</a>
+                                        <td style="width: 10%;text-align: center">
+                                            <a class="edit-link btn-sm btn-primary waves-effect waves-light m-b-5" href="{{route('users.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link btn-sm btn-danger waves-effect waves-light m-b-5" href="{{route('users.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
