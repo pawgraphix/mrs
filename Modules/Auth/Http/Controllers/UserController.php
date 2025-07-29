@@ -8,6 +8,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Modules\Setup\Entities\TradePoint;
 
@@ -59,7 +60,7 @@ class UserController extends Controller
         $params['departments'] = Department::orderBy('name')->get();
         $params['roles'] = Role::orderBy('name')->get();
         $params['genders'] = ['Male', 'Female'];
-        return view('auth::users.edit',$params);
+        return view('auth::users.edit', $params);
     }
 
     public function update(Request $request, $id)
@@ -94,6 +95,38 @@ class UserController extends Controller
                 $error_msg = 'User Does not Exist';
                 return redirect()->back()->with('error', $error_msg);
             }
+        } catch (Exception $ex) {
+            $error_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $error_msg);
+        }
+    }
+
+    public function profile()
+    {
+        $userId = Auth::id();
+        $param['user'] = User::find($userId);
+        return view('auth::users.profile', $param);
+    }
+
+    public function changePassword(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $userId = Auth::id();
+            $user = User::find($userId);
+
+            if (!Hash::check($data['old_password'], $user->password)) {
+                return redirect()->back()->with('error', 'Your current password is incorrect');
+            }
+
+            if ($data['password'] != $data['conf_password']) {
+                return redirect()->back()->with('error', 'Passwords do not match');
+            }
+
+            $user->password = Hash::make($data['password']);
+            $user->update();
+            $success_msg = 'Password Successfully Changed';
+            return redirect()->back()->with('success', $success_msg);
         } catch (Exception $ex) {
             $error_msg = $ex->getMessage();
             return redirect()->back()->with('error', $error_msg);

@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DepartmentController;
+use Modules\Auth\Http\Controllers\UserController;
 
 // Show login/register combined form
 Route::get('/', [AuthenticationController::class, 'index'])->name('index');
@@ -23,6 +24,7 @@ Route::post('register', [AuthenticationController::class, 'register']);
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
     Route::get('dashboard', [AuthenticationController::class, 'dashboard'])->name('dashboard');
+    Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
     // Roles
     Route::resource('roles', 'RolesController')->except(['create', 'show', 'destroy']);
@@ -31,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     // Users
     Route::resource('users', 'UserController')->except(['create', 'show', 'destroy']);
     Route::get('users/destroy/{id}', 'UserController@destroy')->name('users.destroy');
+    Route::post('change-password', 'UserController@changePassword')->name('change-password');
 
     // UserRoles
     Route::resource('UserRoles', 'UserRolesController')->except(['create', 'show', 'destroy']);
