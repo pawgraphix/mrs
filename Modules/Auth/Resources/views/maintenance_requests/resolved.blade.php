@@ -20,7 +20,8 @@
                                 <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Reporter Name</th>
+{{--                                    <th>Reporter Name</th>--}}
+                                    <th>Request Id</th>
                                     <th>Asset Name</th>
                                     <th>Issue</th>
                                     <th>Location</th>
@@ -32,7 +33,8 @@
                                 @foreach($items as $key=>$item)
                                     <tr>
                                         <td style="width: 5%">{{++$key}}</td>
-                                        <td>{{$item->user->first_name." " .$item->user->last_name}}</td>
+{{--                                        <td>{{$item->user->first_name." " .$item->user->last_name}}</td>--}}
+                                        <td>{{$item->request_id}}</td>
                                         <td>{{$item->asset->name}}</td>
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>

@@ -23,12 +23,12 @@
                                 <tr>
                                     <th>S/N</th>
 {{--                                    <th>Reporter Name</th>--}}
-                                    <th>Asset Name</th>
+                                    <th style="width: 10%;text-align: center">Asset Name</th>
                                     <th>Location</th>
                                     <th>Issue</th>
                                     <th>Status</th>
-                                    <th>Reported Time</th>
-                                    <th>Resolved Time</th>
+                                    <th style="width: 12%;text-align: center">Reported Time</th>
+                                    <th style="width: 12%;text-align: center">Resolved Time</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -43,16 +43,22 @@
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->status}}</td>
                                         <td>{{$item->reported_at}}</td>
-                                        <td>{{$item->resolved_at}}</td>
-                                        <td style="width: 18%;text-align: center">
+{{--                                        <td>{{$item->resolved_at}}</td>--}}
+
+                                        @if($item->resolved_at)
+                                            <td>{{$item->resolved_at}}</td>
+                                        @else
+                                           <td>Not yet Resolved</td>
+                                        @endif
+                                        <td style="width: 18%; text-align: center">
                                             @if(!$item->submitted_at)
-                                                <a class="edit-link btn btn-primary btn-sm waves-effect waves-light m-b-5" type="button"
-                                                   href="{{route('maintenance_requests.edit',$item->id)}}">Edit</a>
-                                                | <a class="delete-link btn btn-danger btn-sm waves-effect waves-light m-b-5" type="button"
-                                                     href="{{route('maintenance_requests.destroy',$item->id)}}">Delete</a>
+                                                <a class="edit-link btn-sm btn-primary waves-effect waves-light m-b-5" href="{{ route('maintenance_requests.edit', $item->id) }}">Edit</a>
                                                 |
-                                                <a class="submit-link btn btn-success btn-sm waves-effect waves-light m-b-5" type="button"
-                                                   href="{{route('maintenance_requests.submit',$item->id)}}">Submit</a>
+                                                <a class="delete-link btn-sm btn-danger waves-effect waves-light m-b-5" href="{{ route('maintenance_requests.destroy', $item->id) }}">Delete</a>
+                                                |
+                                                <a class="submit-link btn-sm btn-success waves-effect waves-light m-b-5" href="{{ route('maintenance_requests.submit', $item->id) }}">Submit</a>
+                                            @else
+                                                No Action
                                             @endif
                                         </td>
                                     </tr>

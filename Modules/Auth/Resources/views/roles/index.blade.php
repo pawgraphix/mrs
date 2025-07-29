@@ -31,8 +31,8 @@
                                         <td style="width: 5%">{{++$key}}</td>
                                         <td>{{$item->name}}</td>
                                         <td style="width: 12%">
-                                           <a class="edit-link btn btn-primary waves-effect waves-light m-b-5" href="{{route('roles.edit',$item->id)}}">Edit</a>
-                                            | <a class="delete-link btn btn-danger waves-effect waves-light m-b-5" href="{{route('roles.destroy',$item->id)}}">Delete</a>
+                                           <a class="edit-link btn-sm btn-primary waves-effect waves-light m-b-5" href="{{route('roles.edit',$item->id)}}">Edit</a>
+                                            | <a class="delete-link btn-sm btn-danger waves-effect waves-light m-b-5" href="{{route('roles.destroy',$item->id)}}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
