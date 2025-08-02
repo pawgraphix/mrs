@@ -58,13 +58,14 @@
     <!-- Top Bar Start -->
     <div class="topbar">
         <!-- LOGO -->
-        <div class="topbar-left">
+        <div class="topbar-left" >
             <div class="text-center">
                 <a href="{{route('dashboard')}}" class="logo"><i class="md md-terrain"></i> <span>MaReS System </span></a>
             </div>
         </div>
+{{--        style="background-color: red"--}}
         <!-- Button mobile view to collapse sidebar menu -->
-        <div class="navbar navbar-default" role="navigation">
+        <div class="navbar navbar-default" role="navigation" >
             <div class="container">
                 <div class="">
                     <div class="pull-left">
@@ -143,15 +144,15 @@
                     @can('Admin')
                         <li>
                             <a href="{{route('departments.index')}}" class="waves-effect active"><i
-                                        class="md md-home"></i><span> Departments </span></a>
+                                        class="md md-business"></i><span> Departments </span></a>
                         </li>
                         <li>
                             <a href="{{route('room-assets.index')}}" class="waves-effect active"><i
-                                        class="md md-home"></i><span> Assets</span></a>
+                                        class="md md-devices"></i><span> Assets</span></a>
                         </li>
                         <li>
                             <a href="{{route('asset_categories.index')}}" class="waves-effect active"><i
-                                        class="md md-home"></i><span> Asset Categories </span></a>
+                                        class="md md-folder"></i><span> Asset Categories </span></a>
                         </li>
                         <li>
                             <a href="{{route('locations.index')}}" class="waves-effect active"><i
@@ -159,11 +160,11 @@
                         </li>
                         <li>
                             <a href="{{route('users.index')}}" class="waves-effect active"><i
-                                    class="ion-android-user-menu"></i><span>Users</span></a>
+                                    class="md md-people"></i><span>Users</span></a>
                         </li>
                         <li>
                             <a href="{{route('roles.index')}}" class="waves-effect active"><i
-                                    class="md md-room"></i><span>Roles</span></a>
+                                    class="md md-assignment-ind"></i><span>Roles</span></a>
                         </li>
                     @endcan
 

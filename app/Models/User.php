@@ -19,6 +19,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function where(string $string, mixed $email): object
+    {
+        return new class {
+            public function exists(): bool
+            {
+                // simulate DB check (example only - this won't work without DB access)
+                return false;
+            }
+        };
+    }
+
+
     public function maintenanceRequests()
     {
         return $this->hasMany(MaintenanceRequest::class);
@@ -29,12 +41,12 @@ class User extends Authenticatable
         return $this->first_name . " " . $this->last_name;
     }
 
-    public function role()
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function department()
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Department::class);
     }

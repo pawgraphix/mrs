@@ -19,7 +19,11 @@ class AuthenticationController extends Controller
         return view('auth::index', $params);
 
     }
+    public function welcome()
+    {
+        return view('auth::welcome');
 
+    }
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -98,3 +102,15 @@ class AuthenticationController extends Controller
         ));
     }
 }
+
+//$userId = auth()->id();
+//
+//$totalIssues = MaintenanceRequest::where('user_id', $userId)->count();
+//$pendingIssues = MaintenanceRequest::where('user_id', $userId)->where('status', 'pending')->count();
+//$submitted = MaintenanceRequest::where('user_id', $userId)->where('status', 'Submitted')->count();
+//$resolvedIssues = MaintenanceRequest::where('user_id', $userId)->where('status', 'resolved')->count();
+//
+//$recentActivities = MaintenanceRequest::where('user_id', $userId)
+//    ->latest()
+//    ->take(5)
+//    ->get();

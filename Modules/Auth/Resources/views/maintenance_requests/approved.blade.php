@@ -40,7 +40,7 @@
                                         <td>{{$item->reported_at}}</td>
                                         <td style="width: 12%;text-align: center">
                                             @if(!$item->resolved_at)
-                                                <a class="approve-link btn btn-success waves-effect waves-light m-b-5" href="{{route('maintenance_requests.resolve',$item->id)}}">Mark Resolved</a>
+                                                <a class="approve-link btn-sm btn-success waves-effect waves-light m-b-5" href="{{route('maintenance_requests.resolve',$item->id)}}">Mark Resolved</a>
                                             @else
                                                 <span>No Action</span>
                                             @endif

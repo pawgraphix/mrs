@@ -3,14 +3,18 @@ use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DepartmentController;
 use Modules\Auth\Http\Controllers\UserController;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 // Show login/register combined form
-Route::get('/', [AuthenticationController::class, 'index'])->name('index');
+//Route::get('/', [AuthenticationController::class, 'index'])->name('index');
+Route::get('/', [AuthenticationController::class, 'welcome'])->name('welcome');
 
 // Handle GET /login gracefully (fixes the error)
-Route::get('login', function () {
-    return redirect()->route('index');
-});
+//Route::get('login', function () {
+//    return redirect()->route('index');
+//});
+Route::get('login', [AuthenticationController::class, 'index'])->name('index');
 
 // Handle POST login form submission
 Route::post('login', [AuthenticationController::class, 'login'])->name('login');
@@ -69,4 +73,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('locations', 'LocationController')->except(['create', 'show', 'destroy']);
     Route::get('locations/destroy/{id}', 'LocationController@destroy')->name('locations.destroy');
 
+
+    //AJAX
+    Route::post('/check-email', function (Request $request) {
+        $exists = User::where('email', $request->email)->exists();
+        return response()->json(['exists' => $exists]);
+    });
 });

@@ -7,7 +7,7 @@
     <meta name="author" content="YourTeamName">
 
     <link rel="shortcut icon" href="images/favicon_1.ico">
-    <title>Maintenance Reporting System</title>
+    <title>MaReS | Login</title>
 
     <!-- Base Css Files -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -18,11 +18,27 @@
     <link href="{{ asset('css/waves-effect.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
-{{--    <style>--}}
+{{--    <style>
+.input-error{
+border:1px solid red;
+}
+
 {{--        body{--}}
-{{--            background-image: "images/bg.jpg";--}}
+{{--            /*background-image: "images/bg.jpg";*/--}}
+{{--            background-color: #0b0b0b;--}}
 {{--        }--}}
 {{--    </style>--}}
+    <style>
+        .input-error {
+            border: 1px solid red !important;
+        }
+
+        .input-error-msg {
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
 
     <script src="{{ asset('js/modernizr.min.js') }}"></script>
 </head>
@@ -72,6 +88,7 @@
 
                         <div class="form-group">
                             <div class="col-xs-12">
+{{--                                style="width: 50%"--}}
                                 <input class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
@@ -194,7 +211,7 @@
             el.style.opacity = 0;
             setTimeout(() => el.remove(), 500);
         });
-    }, 5000); //5 Seconds
+    },50000); //50seconds
 </script>
 
 <!-- Dynamic tab control -->
@@ -233,5 +250,162 @@
         @endif
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function showError(input, message) {
+            let error = input.nextElementSibling;
+            if (!error || !error.classList.contains('input-error-msg')) {
+                error = document.createElement('small');
+                error.classList.add('input-error-msg');
+                error.style.color = 'red';
+                input.parentNode.appendChild(error);
+            }
+            error.innerText = message;
+            input.classList.add('input-error');
+        }
+
+        function clearError(input) {
+            input.classList.remove('input-error');
+            const error = input.parentNode.querySelector('.input-error-msg');
+            if (error) error.remove();
+        }
+
+        function validateEmailFormat(input) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(input.value)) {
+                showError(input, 'Enter a valid email');
+                return false;
+            } else {
+                clearError(input);
+                return true;
+            }
+        }
+
+        function checkEmailExistence(input) {
+            if (!validateEmailFormat(input)) return;
+
+            fetch("{{ url('/check-email') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ email: input.value })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        showError(input, 'Email is already taken');
+                    } else {
+                        clearError(input);
+                    }
+                })
+                .catch(() => {
+                    showError(input, 'Email is already exists');
+                    // Error checking email
+                });
+        }
+
+        function validatePassword(input) {
+            if (input.value.length < 6) {
+                showError(input, 'Password must be at least 6 characters');
+            } else {
+                clearError(input);
+            }
+        }
+
+        function validateNotEmpty(input, message = 'This field is required') {
+            if (!input.value.trim()) {
+                showError(input, message);
+            } else {
+                clearError(input);
+            }
+        }
+
+        function validatePasswordMatch(password, confirm) {
+            if (!password.value) {
+                clearError(confirm);
+                return;
+            }
+
+            if (confirm.value !== password.value) {
+                showError(confirm, 'Passwords do not match');
+            } else {
+                clearError(confirm);
+            }
+        }
+
+        // Assign listeners
+        const emailInputs = document.querySelectorAll('input[name="email"]');
+        const passwordInputs = document.querySelectorAll('input[name="password"]');
+        const firstName = document.querySelector('input[name="first_name"]');
+        const lastName = document.querySelector('input[name="last_name"]');
+        const phone = document.querySelector('input[name="phone_number"]');
+        const passwordConfirm = document.querySelector('input[name="password_confirmation"]');
+
+        emailInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                validateEmailFormat(input);
+                checkEmailExistence(input);
+            });
+        });
+
+        passwordInputs.forEach(input => {
+            input.addEventListener('input', () => validatePassword(input));
+        });
+
+        if (firstName) {
+            firstName.addEventListener('input', () => {
+                const val = firstName.value.trim();
+
+                if (!val) {
+                    showError(firstName, 'First name is required');
+                } else if (!/^[a-zA-Z\s']+$/.test(val)) {
+                    showError(firstName, 'First name must contain letters only');
+                } else {
+                    clearError(firstName);
+                }
+            });
+        }
+
+        if (lastName) {
+            lastName.addEventListener('input', () => {
+                const val = lastName.value.trim();
+
+                if (!val) {
+                    showError(lastName, 'Last name is required');
+                } else if (!/^[a-zA-Z\s']+$/.test(val)) {
+                    showError(lastName, 'Last name must contain letters only');
+                } else {
+                    clearError(lastName);
+                }
+            });
+        }
+
+        if (phone) {
+            phone.addEventListener('input', () => {
+                const val = phone.value.trim();
+
+                if (!val) {
+                    showError(phone, 'Phone number is required');
+                } else if (!/^\d+$/.test(val)) {
+                    showError(phone, 'Phone number must contain digits only');
+                } else if (val.length > 10) {
+                    showError(phone, 'Phone number must not exceed 10 digits');
+                } else {
+                    clearError(phone);
+                }
+            });
+        }
+
+        if (passwordConfirm) {
+            passwordConfirm.addEventListener('input', () => {
+                const password = document.querySelector('input[name="password"]');
+                validatePasswordMatch(password, passwordConfirm);
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
