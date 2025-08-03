@@ -21,9 +21,12 @@ class ReportController extends Controller
     public function getInfo(Request $request)
     {
         $data = $request->all();
+//        dd($data);
         $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved");
         $param['departments'] = Department::all();
+
         $items = MaintenanceRequest::query();
+
         if ($data['department_id'] != null) {
             $items = $items->where('department_id', $data['department_id']);
         }

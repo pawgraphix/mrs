@@ -24,8 +24,8 @@
 
                                     <div class="form-group col-md-3">
                                         <label for="status">Status</label>
-                                        <select class="form-group" id="status" name="status" required style="width: 100%">
-                                            <option>---Select---</option>
+                                        <select class="form-group" id="status" name="status" style="width: 100%">
+                                            <option value="{{null}}">---Select---</option>
                                             @foreach($status as $st)
                                                 <option value="{{$st}}">{{$st}}</option>
                                             @endforeach
