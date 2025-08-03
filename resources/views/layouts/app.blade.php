@@ -140,6 +140,10 @@
                         <a href="{{route('dashboard')}}" class="waves-effect active"><i
                                 class="md md-home"></i><span> Dashboard </span></a>
                     </li>
+                    <li>
+                        <a href="{{route('rp-maintenance-index')}}" class="waves-effect active"><i
+                                class="md md-home"></i><span> Report </span></a>
+                    </li>
 
                     @can('Admin')
                         <li>
