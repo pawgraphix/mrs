@@ -250,6 +250,7 @@ border:1px solid red;
         @endif
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         function showError(input, message) {
@@ -385,18 +386,26 @@ border:1px solid red;
         if (phone) {
             phone.addEventListener('input', () => {
                 const val = phone.value.trim();
-
                 if (!val) {
                     showError(phone, 'Phone number is required');
-                } else if (!/^\d+$/.test(val)) {
-                    showError(phone, 'Phone number must contain digits only');
-                } else if (val.length > 10) {
-                    showError(phone, 'Phone number must not exceed 10 digits');
+                } else if (!/^(\+\d{12}|0\d{9})$/.test(val)) {
+                    showError(phone, 'Phone number must start with + followed by 12 digits or 0 followed by 9 digits');
                 } else {
                     clearError(phone);
                 }
             });
         }
+
+        // if (!val) {
+        //     showError(phone, 'Phone number is required');
+        // }       else if (!/^\+\d{12}$/.test(val)) {
+        //     showError(phone, 'Phone number must start with + followed by 12 digits');
+        // } else {
+        //     clearError(phone);
+        // }
+
+    // else if (!/^\+255\d{9}$/.test(val)) {
+    //     showError(phone, 'Phone number must start with +255 and contain 9 digits after that');
 
         if (passwordConfirm) {
             passwordConfirm.addEventListener('input', () => {
