@@ -33,8 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //Zonal Manager Role Gate
-        Gate::define('Hod',function ($user){
-            return $user->hasRole('HoD');
+        Gate::define('MO',function ($user){
+            return $user->hasRole('Maintenance Officer');
         });
 
         //DFC Role Gate

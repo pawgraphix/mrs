@@ -181,7 +181,7 @@
                         </li>
                    @endcan
 
-                    @can('Hod')
+                    @can('MO')
                         <li class="has_sub">
                             <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Maintenance Req </span><span class="pull-right"><i class="md md-add"></i></span></a>
                             <ul class="list-unstyled">

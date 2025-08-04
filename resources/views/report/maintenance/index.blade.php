@@ -63,6 +63,7 @@
                             </div>
                             <div class="col-md-2" style="text-align: right">
                                 <a href="{{route('rp-maintenance-excel')}}" class="btn btn-primary waves-effect waves-light"><i class="fa fa-download"></i> Excel</a>
+                                <a href="{{route('rp-maintenance-pdf')}}" class="btn btn-primary waves-effect waves-light"><i class="fa fa-download"></i> PDF</a>
                             </div>
                         </div>
                     </div>

@@ -32,6 +32,7 @@ class MaintenanceRequest extends Model
         return $this->belongsTo(User::class,'reviewed_by');
     }
 
+
     public function location()
     {
         return $this->belongsTo(Location::class);

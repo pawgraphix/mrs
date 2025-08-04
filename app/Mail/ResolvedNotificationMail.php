@@ -42,7 +42,7 @@ class ResolvedNotificationMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'auth::maintenance_requests.resolved_mail',
+            view: 'maintenance_requests.resolved_mail',
         );
     }
 

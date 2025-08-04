@@ -12,8 +12,8 @@
     <!-- Fonts and Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('room-assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('room-assets/ionicon/css/ionicons.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/ionicon/css/ionicons.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/material-design-iconic-font.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/waves-effect.css') }}" rel="stylesheet">
@@ -245,6 +245,7 @@
 
         </div>
     </div>
+    @include('layouts.notification')
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -257,6 +258,9 @@
 <script src="{{ asset('assets/fastclick/fastclick.js') }}"></script>
 <script src="{{ asset('assets/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('assets/jquery-blockui/jquery.blockUI.js') }}"></script>
+<script src="{{asset('assets/notifications/notify.min.js')}}"></script>
+<script src="{{asset('assets/notifications/notify-metro.js')}}"></script>
+<script src="{{asset('assets/notifications/notifications.js')}}"></script>
 <script src="{{ asset('js/jquery.app.js') }}"></script>
 
 <!-- Auto dismiss alerts -->

@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Exports\RpMaintenance;
 use App\Models\Department;
 use App\Models\MaintenanceRequest;
+//use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Pdf;
 class ReportController extends Controller
 {
     public function index()
     {
         $param['is_post_back'] = false;
-        $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved");
+        $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved","Closed");
         $param['departments'] = Department::all();
         return view('report.maintenance.index', $param);
     }
@@ -21,7 +22,6 @@ class ReportController extends Controller
     public function getInfo(Request $request)
     {
         $data = $request->all();
-//        dd($data);
         $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved");
         $param['departments'] = Department::all();
 
@@ -44,5 +44,12 @@ class ReportController extends Controller
     public function downloadExcel()
     {
         return Excel::download(new RpMaintenance(), 'maintenance_report.xlsx');
+    }
+
+    public function downloadPdf()
+    {
+        $params['items'] = session('items_data');
+        $pdf = PDF::loadView('report.maintenance.pdf', $params)->setPaper('a4', 'landscape');
+        return $pdf->download(  'maintenance_request.pdf');
     }
 }

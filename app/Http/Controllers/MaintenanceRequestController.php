@@ -24,7 +24,7 @@ class MaintenanceRequestController extends Controller
 //        $param['items'] = MaintenanceRequest::where('user_id', $userId)
 //            ->where('is_approved','!=',true)->latest()->get();
         $param['items'] = MaintenanceRequest::where('user_id', $userId)
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('is_approved', false)
                     ->orWhereNull('is_approved');
             })->latest()->get();
@@ -89,64 +89,33 @@ class MaintenanceRequestController extends Controller
         }
     }
 
-//    public function submitRequest($id)
-//    {
-//        try {
-//            $maintenanceRequest = MaintenanceRequest::find($id);
-//            $maintenanceRequest->status = 'Submitted';
-//            $maintenanceRequest->submitted_by = auth()->id();
-//            $maintenanceRequest->submitted_at = now();
-//            $maintenanceRequest->update();
-//
-//            $department_id = $maintenanceRequest->asset->department_id;
-//            $role = Role::where('name', 'HoD')->first();
-//            if ($role) {
-//                $hod = User::where('department_id', $department_id)->where('role_id', $role->id)->first();
-//                if ($hod) {
-//                    Mail::to($hod->email)->send(new RequestNotificationMail($hod));
-//                    $success_msg = 'Successfully Submitted';
-//                    return redirect()->back()->with('success', $success_msg);
-//                } else {
-//                    $error_msg = "Hod for this department does not exist";
-//                    return redirect()->back()->with('error', $error_msg);
-//                }
-//            } else {
-//                $error_msg = "Hod role does not exist";
-//                return redirect()->back()->with('error', $error_msg);
-//            }
-//        } catch (Exception $ex) {
-//            $error_msg = $ex->getMessage();
-//            return redirect()->back()->with('error', $error_msg);
-//        }
-//    }
     public function submitRequest($id)
     {
         try {
             $maintenanceRequest = MaintenanceRequest::find($id);
-            $department_id = $maintenanceRequest->asset->department_id;
-            $role = Role::where('name', 'HoD')->first();
+            $role = Role::where('name', 'Maintenance Officer')->first();
 
             if ($role) {
-                $hod = User::where('department_id', $department_id)
-                    ->where('role_id', $role->id)
-                    ->first();
+                $maintenanceOfficers = User::where('role_id', $role->id)->get();
 
-                if ($hod) {
+                if (count($maintenanceOfficers) > 0) {
                     // Only submit if HOD exists
                     $maintenanceRequest->status = 'Submitted';
                     $maintenanceRequest->submitted_by = auth()->id();
                     $maintenanceRequest->submitted_at = now();
                     $maintenanceRequest->update();
 
-                    Mail::to($hod->email)->send(new RequestNotificationMail($hod));
+                    foreach ($maintenanceOfficers as $officer) {
+                        Mail::to($officer->email)->send(new RequestNotificationMail($officer));
+                    }
 
                     return redirect()->back()->with('success', 'Successfully Submitted');
                 } else {
-                    // Don't mark as submitted if HOD doesn't exist
-                    return redirect()->back()->with('error', 'Hod for this department does not exist');
+                    // Don't mark as submitted if MO doesn't exist
+                    return redirect()->back()->with('error', 'Failed to Submit Because Maintenance Officer does not exist');
                 }
             } else {
-                return redirect()->back()->with('error', 'Role HoD not found');
+                return redirect()->back()->with('error', 'Role Maintenance Officer not found');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
@@ -155,9 +124,7 @@ class MaintenanceRequestController extends Controller
 
     public function hodIndex()
     {
-        $departmentId = User::getCurrentUserDepartmentId();
-        $param['items'] = MaintenanceRequest::whereNotNull('submitted_at')->whereNull('reviewed_by')
-            ->where('department_id', $departmentId)->get();
+        $param['items'] = MaintenanceRequest::whereNotNull('submitted_at')->whereNull('reviewed_by')->get();
         return view('maintenance_requests.hod_index', $param);
     }
 
@@ -181,9 +148,10 @@ class MaintenanceRequestController extends Controller
 
     public function approvedRequests()
     {
-        $departmentId = User::getCurrentUserDepartmentId();
+//        $departmentId = User::getCurrentUserDepartmentId();
         $param['items'] = MaintenanceRequest::where('is_approved', true)
-            ->where('department_id', $departmentId)->get();
+//            ->where('department_id', $departmentId)
+            ->get();
         return view('maintenance_requests.approved', $param);
     }
 
@@ -207,6 +175,22 @@ class MaintenanceRequestController extends Controller
         }
     }
 
+    public function closeRequest($id)
+    {
+        try {
+            $maintenanceRequest = MaintenanceRequest::find($id);
+            $maintenanceRequest->status = 'Closed';
+            $maintenanceRequest->closed_at = now();
+            $maintenanceRequest->update();
+
+            $success_msg = "Request No {$maintenanceRequest->request_id} Successfully Closed";
+            return redirect()->back()->with('success', $success_msg);
+        } catch (Exception $ex) {
+            $error_msg = $ex->getMessage();
+            return redirect()->back()->with('error', $error_msg);
+        }
+    }
+
     public function resolvedRequests()
     {
         if (Gate::allows('Student')) {
@@ -214,9 +198,10 @@ class MaintenanceRequestController extends Controller
             $param['items'] = MaintenanceRequest::whereNotNull('resolved_at')
                 ->where('user_id', $userId)->get();
         } else {
-            $departmentId = User::getCurrentUserDepartmentId();
+//            $departmentId = User::getCurrentUserDepartmentId();
             $param['items'] = MaintenanceRequest::whereNotNull('resolved_at')
-                ->where('department_id', $departmentId)->get();
+//                ->where('department_id', $departmentId)
+                ->get();
         }
         return view('maintenance_requests.resolved', $param);
     }
@@ -260,9 +245,10 @@ class MaintenanceRequestController extends Controller
             $param['items'] = MaintenanceRequest::where('is_approved', false)
                 ->where('user_id', $userId)->get();
         } else {
-            $departmentId = User::getCurrentUserDepartmentId();
+//            $departmentId = User::getCurrentUserDepartmentId();
             $param['items'] = MaintenanceRequest::where('is_approved', false)
-                ->where('department_id', $departmentId)->get();
+//                ->where('department_id', $departmentId)
+                ->get();
         }
         return view('maintenance_requests.rejected', $param);
     }

@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <table id="datatable" class="table table-striped table-bordered">
+                            <table id="datatable" class="table table-striped table-condensed table-bordered">
                                 <thead>
                                 <tr>
                                     <th>S/N</th>
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        @include('auth::roles.create')
+        @include('roles.create')
 
         <!-- Edit Modal-->
         <div id="edit_role_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

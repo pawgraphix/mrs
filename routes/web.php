@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('maintenance_requests/approved', [MaintenanceRequestController::class,'approvedRequests'])->name('maintenance_requests.approved');
     Route::get('maintenance_requests/resolved',[MaintenanceRequestController::class,'resolvedRequests'])->name('maintenance_requests.resolved');
     Route::get('maintenance_requests/resolve/{id}',[MaintenanceRequestController::class,'resolveRequest'])->name('maintenance_requests.resolve');
+    Route::get('maintenance_requests/close/{id}',[MaintenanceRequestController::class,'closeRequest'])->name('maintenance_requests.close');
     Route::get('maintenance_requests/reject/{id}', [MaintenanceRequestController::class,'rejectForm'])->name('maintenance_requests.reject-form');
     Route::post('maintenance_requests/reject',  [MaintenanceRequestController::class,'rejectRequest'])->name('maintenance_requests.reject');
     Route::get('maintenance_requests/rejected', [MaintenanceRequestController::class,'rejectedRequests'])->name('maintenance_requests.rejected');
@@ -105,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('rp-maintenance-index', [ReportController::class,'index'])->name('rp-maintenance-index');
     Route::post('rp-maintenance', [ReportController::class,'getInfo'])->name('rp-maintenance');
     Route::get('rp-maintenance-excel', [ReportController::class,'downloadExcel'])->name('rp-maintenance-excel');
+    Route::get('rp-maintenance-pdf', [ReportController::class,'downloadPdf'])->name('rp-maintenance-pdf');
 
 });
 

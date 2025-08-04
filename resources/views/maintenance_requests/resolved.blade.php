@@ -26,6 +26,8 @@
                                     <th>Issue</th>
                                     <th>Location</th>
                                     <th>Resolved At</th>
+{{--                                    <th>Resolved By</th>--}}
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
 
@@ -39,7 +41,14 @@
                                         <td>{{$item->issue}}</td>
                                         <td>{{$item->location->name}}</td>
                                         <td>{{$item->resolved_at}}</td>
-
+{{--                                        <td>{{$item->reviewer->full_name}}</td>--}}
+                                        <td style="width: 12%;text-align: center">
+                                            @if(!$item->closed_at)
+                                                <a class="approve-link btn-sm btn-success waves-effect waves-light m-b-5" href="{{route('maintenance_requests.close',$item->id)}}">Mark Closed</a>
+                                            @else
+                                                <span>Closed</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

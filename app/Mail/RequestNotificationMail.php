@@ -12,11 +12,11 @@ class RequestNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $hod;
+    public $officer;
 
-    public function __construct($hod)
+    public function __construct($officer)
     {
-        $this->hod = $hod;
+        $this->officer = $officer;
 
     }
 
@@ -40,7 +40,7 @@ class RequestNotificationMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'auth::maintenance_requests.request_mail',
+            view: 'maintenance_requests.request_mail',
         );
     }
 

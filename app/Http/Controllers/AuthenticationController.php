@@ -66,12 +66,11 @@ class AuthenticationController extends Controller
         ]);
 
         // 3. Use the user (optional log or redirect with name)
-        return redirect()
-            ->route('login')
-            ->with('success', 'Welcome ' . $user->first_name . '! to MaRes, Now Please Login')
-            ->with('user', $user);
-        dd(session('success'));
-
+//        return redirect()
+//            ->route('index')
+//            ->with('success', 'Welcome ' . $user->first_name . '! to MaRes, Now Please Login')
+//            ->with('user', $user);
+        return redirect()->route('index')->with('success', 'Welcome ' . $user->first_name . '! to MaRes, Now Please Login');
     }
 
     public function logout(Request $request)
