@@ -6,6 +6,8 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
     <link rel="shortcut icon" href="images/favicon_1.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Maintenance Reporting System</title>
 
     <!-- Base Css Files -->
@@ -140,10 +142,6 @@
                         <a href="{{route('dashboard')}}" class="waves-effect active"><i
                                 class="md md-home"></i><span> Dashboard </span></a>
                     </li>
-                    <li>
-                        <a href="{{route('rp-maintenance-index')}}" class="waves-effect active"><i
-                                class="md md-home"></i><span> Report </span></a>
-                    </li>
 
                     @can('Admin')
                         <li>
@@ -192,6 +190,10 @@
                                 <li><a href="{{route('maintenance_requests.resolved')}}">Resolved</a></li>
                                 <li><a href="{{route('maintenance_requests.rejected')}}">Rejected</a></li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="{{route('rp-maintenance-index')}}" class="waves-effect active"><i
+                                    class="md md-file-download"></i><span> Report </span></a>
                         </li>
                     @endcan
 

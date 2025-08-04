@@ -9,7 +9,8 @@
     <link rel="shortcut icon" href="images/favicon_1.ico">
     <title>MaReS | Login</title>
 
-    <!-- Base Css Files -->
+    <!-- Fonts and Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('room-assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('room-assets/ionicon/css/ionicons.min.css') }}" rel="stylesheet" />
@@ -18,17 +19,47 @@
     <link href="{{ asset('css/waves-effect.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
-{{--    <style>
-.input-error{
-border:1px solid red;
-}
 
-{{--        body{--}}
-{{--            /*background-image: "images/bg.jpg";*/--}}
-{{--            background-color: #0b0b0b;--}}
-{{--        }--}}
-{{--    </style>--}}
     <style>
+        .background {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #4a90e2, #0e2f44);
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .gear-icon {
+            position: absolute;
+            font-size: 100px;
+            color: rgba(255, 255, 255, 0.07);
+            animation: rotate 30s linear infinite, float 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(10px, -15px); }
+            50% { transform: translate(-20px, 10px); }
+            75% { transform: translate(5px, -5px); }
+            100% { transform: translate(-15px, 20px); }
+        }
+
+        .gear1 { top: 10%; left: 10%; animation-delay: 0s, 0s; }
+        .gear2 { top: 30%; left: 25%; animation-delay: 0s, 2s; }
+        .gear3 { top: 60%; left: 15%; animation-delay: 0s, 4s; }
+        .gear4 { top: 80%; left: 35%; animation-delay: 0s, 3s; }
+        .gear5 { top: 20%; right: 10%; animation-delay: 0s, 5s; }
+        .gear6 { top: 40%; right: 25%; animation-delay: 0s, 1s; }
+        .gear7 { bottom: 10%; right: 20%; animation-delay: 0s, 2.5s; }
+        .gear8 { bottom: 30%; right: 5%; animation-delay: 0s, 3.2s; }
+        .gear9 { bottom: 50%; left: 5%; animation-delay: 0s, 4.5s; }
+        .gear10 { top: 45%; left: 50%; animation-delay: 0s, 1.8s; }
+
         .input-error {
             border: 1px solid red !important;
         }
@@ -38,12 +69,38 @@ border:1px solid red;
             margin-top: 5px;
             display: block;
         }
-    </style>
 
+        .wrapper-page {
+            position: relative;
+            z-index: 1;
+            background-color: white;
+        }
+
+        .panel-pages {
+            background-color: rgba(255,255,255,0.05) !important;
+            backdrop-filter: blur(6px);
+        }
+    </style>
     <script src="{{ asset('js/modernizr.min.js') }}"></script>
 </head>
+
 <body>
-{{--style="width: 100%; height: 1400px"--}}
+{{--<a href="{{ route('welcome') }}" class="btn">Go to Home Page</a>--}}
+<!-- Background Animation -->
+<div class="background">
+    <i class="fas fa-cog gear-icon gear1"></i>
+    <i class="fas fa-cog gear-icon gear2"></i>
+    <i class="fas fa-cog gear-icon gear3"></i>
+    <i class="fas fa-cog gear-icon gear4"></i>
+    <i class="fas fa-cog gear-icon gear5"></i>
+    <i class="fas fa-cog gear-icon gear6"></i>
+    <i class="fas fa-cog gear-icon gear7"></i>
+    <i class="fas fa-cog gear-icon gear8"></i>
+    <i class="fas fa-cog gear-icon gear9"></i>
+    <i class="fas fa-cog gear-icon gear10"></i>
+</div>
+
+<!-- Main Panel -->
 <div class="wrapper-page">
     <div class="panel panel-color panel-primary panel-pages">
         <div class="panel-heading bg-img">
@@ -88,7 +145,6 @@ border:1px solid red;
 
                         <div class="form-group">
                             <div class="col-xs-12">
-{{--                                style="width: 50%"--}}
                                 <input class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
@@ -146,9 +202,10 @@ border:1px solid red;
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <select name="department_id" id="department_id" class="form-control input-lg" required>
+                                <select name="department_id" class="form-control input-lg" required>
                                     <option value="" disabled selected>Select Department</option>
                                     @foreach($departments as $department)
                                         <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>
@@ -189,7 +246,6 @@ border:1px solid red;
         </div>
     </div>
 </div>
-
 <!-- Scripts -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -404,8 +460,8 @@ border:1px solid red;
         //     clearError(phone);
         // }
 
-    // else if (!/^\+255\d{9}$/.test(val)) {
-    //     showError(phone, 'Phone number must start with +255 and contain 9 digits after that');
+        // else if (!/^\+255\d{9}$/.test(val)) {
+        //     showError(phone, 'Phone number must start with +255 and contain 9 digits after that');
 
         if (passwordConfirm) {
             passwordConfirm.addEventListener('input', () => {
@@ -415,6 +471,5 @@ border:1px solid red;
         }
     });
 </script>
-
 </body>
 </html>

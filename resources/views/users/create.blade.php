@@ -73,8 +73,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                       placeholder="Enter Email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+                                <small class="input-error-msg" style="color:red; display:none;"></small>
                             </div>
                         </div>
                     </div>

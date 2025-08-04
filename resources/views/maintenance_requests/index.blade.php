@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        @include('auth::maintenance_requests.create')
+        @include('maintenance_requests.create')
         <!-- Edit Modal-->
         <div id="edit_maintenance_requests_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">

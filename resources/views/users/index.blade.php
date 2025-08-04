@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        @include('auth::users.create')
+        @include('users.create')
 
         <!-- Edit Modal-->
         <div id="edit_user_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -78,6 +78,112 @@
             $('.modal-edit').load(dataURL, function () {
                 $('#edit_user_modal').modal({show: true});
             });
+        });
+
+            document.addEventListener('DOMContentLoaded', function () {
+            function showError(input, message) {
+                let error = input.nextElementSibling;
+                if (!error || !error.classList.contains('input-error-msg')) {
+                    error = document.createElement('small');
+                    error.classList.add('input-error-msg');
+                    error.style.color = 'red';
+                    input.parentNode.appendChild(error);
+                }
+                error.innerText = message;
+                error.style.display = 'block';
+                input.classList.add('input-error');
+            }
+
+            function clearError(input) {
+            input.classList.remove('input-error');
+            const error = input.parentNode.querySelector('.input-error-msg');
+            if (error) {
+            error.innerText = '';
+            error.style.display = 'none';
+        }
+        }
+
+            function validateEmailFormat(input) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(input.value)) {
+            showError(input, 'Enter a valid email');
+            return false;
+        } else {
+            clearError(input);
+            return true;
+        }
+        }
+
+            function checkEmailExistence(input) {
+            if (!validateEmailFormat(input)) return;
+
+            fetch("{{ url('/check-email') }}", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+            body: JSON.stringify({ email: input.value })
+        })
+            .then(res => res.json())
+            .then(data => {
+            if (data.exists) {
+            showError(input, 'Email is already taken');
+        } else {
+            clearError(input);
+        }
+        })
+            .catch(() => {
+            showError(input, 'Error checking email');
+        });
+        }
+
+            function validateName(input, label) {
+            const val = input.value.trim();
+            if (!val) {
+            showError(input, `${label} is required`);
+        } else if (!/^[a-zA-Z\s']+$/.test(val)) {
+            showError(input, `${label} must contain letters only`);
+        } else {
+            clearError(input);
+        }
+        }
+
+            function validatePhone(input) {
+            const val = input.value.trim();
+            if (!val) {
+            showError(input, 'Phone number is required');
+        } else if (!/^(\+\d{12}|0\d{9})$/.test(val)) {
+            showError(input, 'Phone number must start with + followed by 12 digits or 0 followed by 9 digits and must contain numbers');
+        } else {
+            clearError(input);
+        }
+        }
+
+            // Select inputs
+            const emailInput = document.querySelector('#create_user_modal input[name="email"]');
+            const firstName = document.querySelector('#create_user_modal input[name="first_name"]');
+            const lastName = document.querySelector('#create_user_modal input[name="last_name"]');
+            const phone = document.querySelector('#create_user_modal input[name="phone_number"]');
+
+            if (emailInput) {
+            emailInput.addEventListener('input', () => {
+            validateEmailFormat(emailInput);
+            checkEmailExistence(emailInput);
+        });
+        }
+
+            if (firstName) {
+            firstName.addEventListener('input', () => validateName(firstName, 'First name'));
+        }
+
+            if (lastName) {
+            lastName.addEventListener('input', () => validateName(lastName, 'Last name'));
+        }
+
+            if (phone) {
+            phone.addEventListener('input', () => validatePhone(phone));
+        }
         });
     </script>
 @endsection

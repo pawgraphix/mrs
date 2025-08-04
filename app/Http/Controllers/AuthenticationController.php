@@ -67,9 +67,10 @@ class AuthenticationController extends Controller
 
         // 3. Use the user (optional log or redirect with name)
         return redirect()
-            ->route('index')
+            ->route('login')
             ->with('success', 'Welcome ' . $user->first_name . '! to MaRes, Now Please Login')
             ->with('user', $user);
+        dd(session('success'));
 
     }
 
@@ -100,6 +101,21 @@ class AuthenticationController extends Controller
             //'notifications',
             'recentActivities'
         ));
+    }
+
+
+    public function checkEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $exists = User::where('email', $request->email)->exists();
+
+        return response()->json([
+            'exists' => $exists,
+            'message' => $exists ? 'Email already exists' : 'Email is available'
+        ]);
     }
 }
 

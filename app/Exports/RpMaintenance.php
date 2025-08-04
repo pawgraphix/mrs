@@ -27,13 +27,13 @@ class RpMaintenance implements FromView, WithEvents
                     $event->sheet->getColumnDimension($col)->setAutoSize(true);
                 }
 
-//                $dealers = count(session('dealers_data'));
-//                $count = $dealers + 2;
-//
-//                $event->sheet->getColumnDimension('B')->setAutoSize(false);
-//                $event->sheet->getColumnDimension('B')->setWidth(30);
-//                $event->sheet->getStyle('B2:B' . $count)->getAlignment()->setWrapText(true);
-//
+                $data = count(session('items_data'));
+                $count = $data + 2;
+
+                $event->sheet->getColumnDimension('E')->setAutoSize(false);
+                $event->sheet->getColumnDimension('E')->setWidth(50);
+                $event->sheet->getStyle('E3:E' . $count)->getAlignment()->setWrapText(true);
+
 //                $event->sheet->getColumnDimension('C')->setAutoSize(false);
 //                $event->sheet->getColumnDimension('C')->setWidth(40);
 //                $event->sheet->getStyle('C2:C' . $count)->getAlignment()->setWrapText(true);

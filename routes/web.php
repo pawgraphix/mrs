@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRolesController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,10 +43,15 @@ Route::get('login', [AuthenticationController::class, 'index'])->name('index');
 Route::post('login', [AuthenticationController::class, 'login'])->name('login');
 
 // Show register form (optional, points to same index)
-Route::get('register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
+Route::post('register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
 
-// Handle POST register form submission
-Route::post('register', [AuthenticationController::class, 'register']);
+Route::post('/check-email', [AuthenticationController::class, 'checkEmail']);
+
+////AJAX
+//Route::post('/check-email', function (Request $request) {
+//    $exists = User::where('email', $request->email)->exists();
+//    return response()->json(['exists' => $exists]);
+//});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
@@ -94,15 +100,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('locations', LocationController::class)->except(['create', 'show', 'destroy']);
     Route::get('locations/destroy/{id}', [LocationController::class,'destroy'])->name('locations.destroy');
 
-    //AJAX
-    Route::post('/check-email', function (Request $request) {
-        $exists = User::where('email', $request->email)->exists();
-        return response()->json(['exists' => $exists]);
-    });
 
     //Reports
     Route::get('rp-maintenance-index', [ReportController::class,'index'])->name('rp-maintenance-index');
     Route::post('rp-maintenance', [ReportController::class,'getInfo'])->name('rp-maintenance');
     Route::get('rp-maintenance-excel', [ReportController::class,'downloadExcel'])->name('rp-maintenance-excel');
+
 });
 

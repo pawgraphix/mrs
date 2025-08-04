@@ -133,4 +133,12 @@ class UserController extends Controller
             return redirect()->back()->with('error', $error_msg);
         }
     }
+
+//    public function checkEmail(Request $request)
+//    {
+//        $email = $request->input('email');
+//        // Example validation or check
+//        $exists = User::where('email', $email)->exists();
+//        return response()->json(['exists' => $exists]);
+//    }
 }

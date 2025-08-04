@@ -131,7 +131,7 @@
 
 <div class="container">
     <h1>Welcome to MaReS</h1>
-    <p>Maintenance Reporting System for institutions — helping you track and report issues efficiently.</p>
+    <p>Maintenance Reporting System for institutions helping you track and report issues efficiently.</p>
     <a href="{{ route('login') }}" class="btn">Go to Login</a>
 </div>
 
