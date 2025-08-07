@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-10">
-                            <h3 class="panel-title">Resolved Maintenance Requests </h3>
+                            <h3 class="panel-title">Closed Maintenance Requests </h3>
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             <!-- Buttons Goes Here-->
@@ -27,7 +27,7 @@
                                     <th>Location</th>
                                     <th>Resolved At</th>
 {{--                                    <th>Resolved By</th>--}}
-                                    <th>Action</th>
+{{--                                    <th>Action</th>--}}
                                 </tr>
                                 </thead>
 
@@ -42,20 +42,6 @@
                                         <td>{{$item->location->name}}</td>
                                         <td>{{$item->resolved_at}}</td>
 {{--                                        <td>{{$item->reviewer->full_name}}</td>--}}
-                                        @can('MO')
-                                            <td style="width: 12%;text-align: center">
-                                                    <span>No Action</span>
-                                            </td>
-                                        @endcan
-                                        @can('Student')
-                                        <td style="width: 12%;text-align: center">
-                                            @if(!$item->closed_at)
-                                                <a class="approve-link btn-sm btn-success waves-effect waves-light m-b-5" href="{{route('maintenance_requests.close',$item->id)}}">Mark Closed</a>
-                                            @else
-                                                <span>Closed</span>
-                                            @endif
-                                        </td>
-                                        @endcan
                                     </tr>
                                 @endforeach
                                 </tbody>

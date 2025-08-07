@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        @include('auth::asset_categories.create')
+        @include('asset_categories.create')
         <!-- Edit Modal-->
         <div id="edit_asset_categories_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">

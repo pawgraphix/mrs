@@ -154,7 +154,7 @@
             if (!val) {
             showError(input, 'Phone number is required');
         } else if (!/^(\+\d{12}|0\d{9})$/.test(val)) {
-            showError(input, 'Phone number must start with + followed by 12 digits or 0 followed by 9 digits and must contain numbers');
+            showError(input, 'Phone number must start with + followed by 12 digits or 0 followed by 9 digits and must contain num');
         } else {
             clearError(input);
         }

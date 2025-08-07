@@ -48,7 +48,7 @@ class AuthenticationController extends Controller
             'first_name'   => 'required|string|max:255',
             'last_name'    => 'required|string|max:255',
             'phone_number' => 'required|string|max:10',
-            'gender'       => 'required|in:male,female',
+            'gender'       => 'required|in:Male,Female',
             'email'        => 'required|email|unique:users',
             'password'     => 'required|string|min:6|confirmed',
             'department_id' => 'required|exists:departments,id',

@@ -191,6 +191,17 @@ class MaintenanceRequestController extends Controller
         }
     }
 
+    public function closedRequests()
+    {
+        $param['items'] = MaintenanceRequest::whereNotNull('closed_at')->get();
+        return view('maintenance_requests.closed', $param);
+////        $departmentId = User::getCurrentUserDepartmentId();
+//        $param['items'] = MaintenanceRequest::where('closed_at', true)
+////            ->where('department_id', $departmentId)
+//            ->get();
+//        return view('maintenance_requests.closed', $param);
+    }
+
     public function resolvedRequests()
     {
         if (Gate::allows('Student')) {

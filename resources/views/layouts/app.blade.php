@@ -177,6 +177,7 @@
                                 <li><a href="{{route('maintenance_requests.index')}}">Request</a></li>
                                 <li><a href="{{route('maintenance_requests.resolved')}}">Resolved</a></li>
                                 <li><a href="{{route('maintenance_requests.rejected')}}">Rejected</a></li>
+                                <li><a href="{{route('maintenance_requests.closed')}}">Closed</a></li>
                             </ul>
                         </li>
                    @endcan

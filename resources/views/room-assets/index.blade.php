@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        @include('auth::room-assets.create')
+        @include('room-assets.create')
         <!-- Edit Modal-->
         <div id="edit_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">

@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        @include('auth::departments.create')
+        @include('departments.create')
         <!-- Edit Modal-->
         <div id="edit_department_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">

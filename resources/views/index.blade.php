@@ -197,8 +197,8 @@
                             <div class="col-xs-12">
                                 <select name="gender" class="form-control input-lg" required>
                                     <option value="" disabled selected>Select Gender</option>
-                                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                                 </select>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
+                                <input id="register-email"  class="form-control input-lg" name="email" type="email" required placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
 
@@ -310,7 +310,6 @@
         @endif
     });
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         function showError(input, message) {
@@ -363,7 +362,6 @@
                 })
                 .catch(() => {
                     showError(input, 'Email is already exists');
-                    // Error checking email
                 });
         }
 
@@ -397,19 +395,19 @@
         }
 
         // Assign listeners
-        const emailInputs = document.querySelectorAll('input[name="email"]');
         const passwordInputs = document.querySelectorAll('input[name="password"]');
         const firstName = document.querySelector('input[name="first_name"]');
         const lastName = document.querySelector('input[name="last_name"]');
         const phone = document.querySelector('input[name="phone_number"]');
         const passwordConfirm = document.querySelector('input[name="password_confirmation"]');
+        const registerEmail = document.getElementById('register-email'); // Make sure the input has this ID
 
-        emailInputs.forEach(input => {
-            input.addEventListener('input', () => {
-                validateEmailFormat(input);
-                checkEmailExistence(input);
+        if (registerEmail) {
+            registerEmail.addEventListener('input', () => {
+                validateEmailFormat(registerEmail);
+                checkEmailExistence(registerEmail);
             });
-        });
+        }
 
         passwordInputs.forEach(input => {
             input.addEventListener('input', () => validatePassword(input));
@@ -455,17 +453,6 @@
                 }
             });
         }
-
-        // if (!val) {
-        //     showError(phone, 'Phone number is required');
-        // }       else if (!/^\+\d{12}$/.test(val)) {
-        //     showError(phone, 'Phone number must start with + followed by 12 digits');
-        // } else {
-        //     clearError(phone);
-        // }
-
-        // else if (!/^\+255\d{9}$/.test(val)) {
-        //     showError(phone, 'Phone number must start with +255 and contain 9 digits after that');
 
         if (passwordConfirm) {
             passwordConfirm.addEventListener('input', () => {

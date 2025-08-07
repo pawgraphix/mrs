@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        @include('auth::locations.create')
+        @include('locations.create')
         <!-- Edit Modal-->
         <div id="edit_location_modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">

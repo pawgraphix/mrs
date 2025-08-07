@@ -42,8 +42,13 @@ Route::get('login', [AuthenticationController::class, 'index'])->name('index');
 // Handle POST login form submission
 Route::post('login', [AuthenticationController::class, 'login'])->name('login');
 
-// Show register form (optional, points to same index)
-Route::post('register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
+//// Show register form (optional, points to same index)
+//Route::get('register', [AuthenticationController::class, 'showRegisterForm'])->name('register');
+// Show register form
+Route::get('register', [AuthenticationController::class, 'showRegisterForm'])->name('register.form');
+
+// Handle registration
+Route::post('register', [AuthenticationController::class, 'register'])->name('register');
 
 Route::post('/check-email', [AuthenticationController::class, 'checkEmail']);
 
@@ -96,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('maintenance_requests/reject/{id}', [MaintenanceRequestController::class,'rejectForm'])->name('maintenance_requests.reject-form');
     Route::post('maintenance_requests/reject',  [MaintenanceRequestController::class,'rejectRequest'])->name('maintenance_requests.reject');
     Route::get('maintenance_requests/rejected', [MaintenanceRequestController::class,'rejectedRequests'])->name('maintenance_requests.rejected');
+    Route::get('maintenance_requests/closed', [MaintenanceRequestController::class,'closedRequests'])->name('maintenance_requests.closed');
 
     //Locations
     Route::resource('locations', LocationController::class)->except(['create', 'show', 'destroy']);

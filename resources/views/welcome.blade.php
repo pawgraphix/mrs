@@ -23,6 +23,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         .background {
@@ -112,9 +113,33 @@
                 padding: 10px 20px;
             }
         }
+
+        /* Updated title banner */
+        .title-banner {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #1e5799, #2989d8, #207cca, #7db9e8);
+            padding: 20px 0;
+            text-align: center;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .title-banner h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        }
+
     </style>
 </head>
 <body>
+<div class="title-banner">
+    <h1>MAINTENANCE REPORTING SYSTEM (MaReS)</h1>
+</div>
 
 <div class="background">
     <i class="fas fa-cog gear-icon gear1"></i>

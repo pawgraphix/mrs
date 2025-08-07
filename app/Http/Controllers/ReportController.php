@@ -22,7 +22,7 @@ class ReportController extends Controller
     public function getInfo(Request $request)
     {
         $data = $request->all();
-        $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved");
+        $param['status'] = array("Approved", "Rejected", "Submitted", "Resolved", "Closed");
         $param['departments'] = Department::all();
 
         $items = MaintenanceRequest::query();

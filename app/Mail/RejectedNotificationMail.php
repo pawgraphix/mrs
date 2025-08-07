@@ -42,7 +42,7 @@ class RejectedNotificationMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'auth::maintenance_requests.rejected_mail',
+            view: 'maintenance_requests.rejected_mail',
         );
     }
 
