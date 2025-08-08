@@ -42,10 +42,37 @@
         </div>
         <div class="col-md-6 col-sm-6 col-lg-3">
             <div class="mini-stat clearfix bx-shadow">
-                <span class="mini-stat-icon bg-success"><i class="fa fa-check"></i></span>
+                <span class="mini-stat-icon bg-info"><i class="fa fa-wrench"></i></span>
                 <div class="mini-stat-info text-right text-muted">
                     <span class="counter">{{ $resolvedIssues }}</span>
                     Resolved Issues
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+            <div class="mini-stat clearfix bx-shadow">
+                <span class="mini-stat-icon bg-success"><i class="fa fa-archive"></i></span>
+                <div class="mini-stat-info text-right text-muted">
+                    <span class="counter">{{ $closedIssues }}</span>
+                    Closed Issues
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+            <div class="mini-stat clearfix bx-shadow">
+                <span class="mini-stat-icon bg-success"><i class="fa fa-check"></i></span>
+                <div class="mini-stat-info text-right text-muted">
+                    <span class="counter">{{ $approvedIssues }}</span>
+                    Approved Issues
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+            <div class="mini-stat clearfix bx-shadow">
+                <span class="mini-stat-icon bg-danger"><i class="fa fa-times"></i></span>
+                <div class="mini-stat-info text-right text-muted">
+                    <span class="counter">{{ $rejectedIssues }}</span>
+                    Rejected Issues
                 </div>
             </div>
         </div>

@@ -87,6 +87,15 @@ class AuthenticationController extends Controller
         $pendingIssues = MaintenanceRequest::where('status', 'pending')->count();
         $submitted = MaintenanceRequest::where('status', 'Submitted')->count();
         $resolvedIssues = MaintenanceRequest::where('status', 'resolved')->count();
+        $closedIssues = MaintenanceRequest::where('status', 'closed')->count();
+        $approvedIssues = MaintenanceRequest::where('status', 'approved')->count();
+        $rejectedIssues = MaintenanceRequest::where('status', 'rejected')
+            ->where(function ($query) {
+                $query->whereNotNull('reject_comment')
+                    ->where('reject_comment', '!=', '');
+            })
+            ->count();
+//        $rejectedIssues = MaintenanceRequest::where('status', 'rejected')->count();
 
         // Notifications kwa mtumiaji aliye-login (kama unatumia user_id kwenye notifications)
         //$notifications = Notification::where('user_id', auth()->id())->latest()->take(5)->get();
@@ -97,6 +106,9 @@ class AuthenticationController extends Controller
             'pendingIssues',
             'submitted',
             'resolvedIssues',
+            'closedIssues',
+            'approvedIssues',
+            'rejectedIssues',
             //'notifications',
             'recentActivities'
         ));

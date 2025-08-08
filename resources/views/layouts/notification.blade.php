@@ -14,7 +14,7 @@
                 $(".notifyjs-corner").fadeOut(500, function () {
                     $(this).remove();
                 });
-            }, 10000); // 5 seconds
+            }, 10000);
         });
     </script>
 @endif
@@ -36,7 +36,7 @@
                 $(".notifyjs-corner").fadeOut(500, function () {
                     $(this).remove();
                 });
-            },10000); // 5 seconds
+            },10000);
         });
     </script>
 @endif
@@ -58,7 +58,7 @@
                 $(".notifyjs-corner").fadeOut(500, function () {
                     $(this).remove();
                 });
-            }, 10000); // 5 seconds
+            }, 10000);
         });
     </script>
 @endif
